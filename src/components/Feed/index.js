@@ -6,14 +6,14 @@ import Styles from './styles.scss';
 
 // Components
 import Composer from '../../components/Composer';
-import Comment from '../../components/Comment';
+import Post from '../../components/Post';
 
 export default class Feed extends Component {
     render () {
         return (
             <section className = { Styles.feed }>
                 <Composer />
-                <Comment />
+                <Post />
             </section>
         );
     }
