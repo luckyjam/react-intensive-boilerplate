@@ -11,17 +11,26 @@ import Post from '../../components/Post';
 
 export default class Feed extends Component {
     static propTypes = {
+        avatar:    PropTypes.string.isRequired,
         firstName: PropTypes.string.isRequired,
         lastName:  PropTypes.string.isRequired
     };
 
     render () {
-        const { firstName, lastName } = this.props;
+        const { firstName, lastName, avatar } = this.props;
 
         return (
             <section className = { Styles.feed }>
-                <Composer firstName = { firstName } lastName = { lastName } />
-                <Post firstName = { firstName } lastName = { lastName } />
+                <Composer
+                    avatar = { avatar }
+                    firstName = { firstName }
+                    lastName = { lastName }
+                />
+                <Post
+                    avatar = { avatar }
+                    firstName = { firstName }
+                    lastName = { lastName }
+                />
             </section>
         );
     }
