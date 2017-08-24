@@ -13,11 +13,11 @@ export default class Post extends Component {
                 <a>
                     <img alt = 'commenter' src = { homer } />
                 </a>
-                <a className = { Styles.name }>Homer Simpson</a>
+                <a className = { Styles.name }>{'Homer Simpson'}</a>
                 <a className = { Styles.time }>
                     {getCurrentTime()}
                 </a>
-                <p className = { Styles.message }>I fell perfect!</p>
+                <p className = { Styles.message }>It is donuts time! Doh!</p>
             </section>
         );
     }

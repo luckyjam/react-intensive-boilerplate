@@ -11,7 +11,9 @@ export default class Composer extends Component {
             <section className = { Styles.composer }>
                 <img alt = 'commenter' src = { homer } />
                 <form>
-                    <textarea placeholder = { 'What\'s on your mind, Homer?' } />
+                    <textarea
+                        placeholder = { `What's on your mind, Homer?` }
+                    />
                     <input type = 'submit' value = 'Post' />
                 </form>
             </section>
