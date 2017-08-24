@@ -63,3 +63,6 @@ linters:
 
   SingleLinePerSelector:
     enabled: false
+
+  QualifyingElement:
+    enabled: false

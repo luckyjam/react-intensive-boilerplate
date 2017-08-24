@@ -1,11 +1,14 @@
+// Core
 import React, { Component } from 'react';
-import Styles from './styles.scss';
+
+// Components
+import Feed from '../../components/Feed';
 
 export default class App extends Component {
     render () {
         return (
-            <section className = { Styles.app }>
-                <h1>Welcome!</h1>
+            <section>
+                <Feed />
             </section>
         );
     }
