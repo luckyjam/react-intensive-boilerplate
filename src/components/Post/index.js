@@ -25,7 +25,7 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {getCurrentTime()}
                 </a>
-                <p className = { Styles.message }>I fell perfect!</p>
+                <p className = { Styles.message }>I feel perfect!</p>
             </section>
         );
     }
