@@ -2,23 +2,28 @@
 import React, { Component } from 'react';
 
 // Instruments
-import homer from '../../theme/assets/homer.png';
+import PropTypes from 'prop-types';
 
 // Components
 import Feed from '../../components/Feed';
 
-const firstName = 'Homer';
 const lastName = 'Simpson';
 
 export default class App extends Component {
+    static childContextTypes = {
+        firstName: PropTypes.string.isRequired
+    };
+
+    getChildContext () {
+        return {
+            firstName: 'Homer'
+        };
+    }
+
     render () {
         return (
             <section>
-                <Feed
-                    avatar = { homer }
-                    firstName = { firstName }
-                    lastName = { lastName }
-                />
+                <Feed lastName = { lastName } />
             </section>
         );
     }
