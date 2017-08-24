@@ -3,20 +3,21 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
-import homer from '../../theme/assets/homer.png';
 import PropTypes from 'prop-types';
 
 export default class Composer extends Component {
     static contextTypes = {
-        firstName: PropTypes.string.isRequired
+        avatar:    PropTypes.string.isRequired,
+        firstName: PropTypes.string.isRequired,
+        lastName:  PropTypes.string.isRequired
     };
 
     render () {
-        const { firstName } = this.context;
+        const { firstName, avatar } = this.context;
 
         return (
             <section className = { Styles.composer }>
-                <img alt = 'commenter' src = { homer } />
+                <img alt = 'commenter' src = { avatar } />
                 <form>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }
