@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import Styles from './styles.scss';
 import TweenMax from 'gsap';
 import Transition from 'react-transition-group/Transition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 // Components
 import Composer from '../../components/Composer';
@@ -66,16 +67,32 @@ export default class Feed extends Component {
         );
     };
 
+    handlePostEnter = () => {
+        TweenMax.fromTo(this.post, 0.5, { opacity: 0 }, { opacity: 1 });
+    };
+
+    handlePostExit = () => {
+        TweenMax.fromTo(this.post, 0.5, { y: 0 }, { y: 1000 });
+    }
+
     render () {
         const posts = this.state.posts.map((message, key) =>
-            (<Post
-                decreasePostsCount = { this.decreasePostsCount }
-                deletePost = { this.deletePost }
-                increasePostsCount = { this.increasePostsCount }
-                index = { key }
+            (<Transition
+                in
                 key = { key }
-                message = { message }
-            />)
+                timeout = { 500 }
+                onEnter = { this.handlePostEnter }
+                onExit = { this.handlePostExit }>
+                <div ref = { (post) => this.post = post }>
+                    <Post
+                        decreasePostsCount = { this.decreasePostsCount }
+                        deletePost = { this.deletePost }
+                        increasePostsCount = { this.increasePostsCount }
+                        index = { key }
+                        message = { message }
+                    />
+                </div>
+            </Transition>)
         );
 
         return (
@@ -98,7 +115,9 @@ export default class Feed extends Component {
                         <Counter count = { this.state.postsCount } />
                     </div>
                 </Transition>
-                {posts}
+                <TransitionGroup>
+                    {posts}
+                </TransitionGroup>
                 <Transition
                     appear
                     in
