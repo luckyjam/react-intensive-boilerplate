@@ -42,19 +42,19 @@ export default class Feed extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map((message, key) =>
+        const posts = this.state.posts.map(({ message, id }, index) =>
             (<CSSTransition
                 classNames = { {
                     enter:       Styles.postEnter,
                     enterActive: Styles.postEnterActive
                 } }
-                key = { key }
+                key = { id }
                 timeout = { { enter: 300, exit: 0 } }>
                 <Post
                     decreasePostsCount = { this.decreasePostsCount }
                     deletePost = { this.deletePost }
                     increasePostsCount = { this.increasePostsCount }
-                    index = { key }
+                    index = { index }
                     message = { message }
                 />
             </CSSTransition>)
