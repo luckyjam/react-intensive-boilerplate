@@ -19,7 +19,7 @@ env:
 
 rules:
   no-cond-assign: 1
-  no-console: 1
+  no-console: 0
   no-constant-condition: 1
   no-control-regex: 1
   no-debugger: 1
@@ -58,7 +58,7 @@ rules:
   dot-notation: 1
   eqeqeq: 1
   guard-for-in: 1
-  no-alert: 1
+  no-alert: 0
   no-caller: 1
   no-case-declarations: 1
   no-div-regex: 1

@@ -7,6 +7,7 @@ import Styles from './styles.scss';
 // Components
 import Composer from '../../components/Composer';
 import Post from '../../components/Post';
+import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
     state = {
@@ -24,10 +25,10 @@ export default class Feed extends Component {
             <Post key = { key } message = { message } />
         );
 
-
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
+                <Counter count = { this.state.posts.length } />
                 {posts}
             </section>
         );
