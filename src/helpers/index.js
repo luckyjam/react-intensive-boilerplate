@@ -3,14 +3,10 @@ import moment from 'moment';
 
 export const getCurrentTime = () => moment().format('MMMM D h:mm:ss a');
 
-export const getUniqueID = (length, lowercase) => {
+export const getUniqueID = (length) => {
     let text = '';
-    let possible =
+    const possible =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    if (lowercase) {
-        possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    }
 
     for (let i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -28,10 +24,9 @@ export const getRandomColor = () => {
     }
 
     return color;
-<<<<<<< HEAD
-}
+};
 
-export function getFullName (firstName, lastName) {
+export const getFullName = (firstName, lastName) => {
     if (typeof firstName !== 'string' || typeof lastName !== 'string') {
         throw new Error(
             'firstName and lastName arguments passed should be a string!'
@@ -39,7 +34,4 @@ export function getFullName (firstName, lastName) {
     }
 
     return `${firstName} ${lastName}`;
-}
-=======
 };
->>>>>>> d0a9d3f... rename helper functions
