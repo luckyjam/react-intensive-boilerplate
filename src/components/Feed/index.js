@@ -9,15 +9,18 @@ import Composer from '../../components/Composer';
 import Post from '../../components/Post';
 
 export default class Feed extends Component {
-    posts = [];
+    state = {
+        posts: []
+    };
 
-    createPost = (post) => {
-        this.posts.push(post);
-        this.forceUpdate();
+    createPost = () => {
+        this.setState({
+            posts: this.state.posts.concat('new post')
+        });
     };
 
     render () {
-        const posts = this.posts.map((post, key) => <Post key = { key } />);
+        const posts = this.state.posts.map((post, key) => <Post key = { key } />);
 
         return (
             <section className = { Styles.feed }>
