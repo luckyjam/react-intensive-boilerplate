@@ -28,10 +28,10 @@ export default class Feed extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map((message, key) =>
+        const posts = this.state.posts.map(({ message, id }) =>
             (<Post
                 increasePostsCount = { this.increasePostsCount }
-                key = { key }
+                key = { id }
                 message = { message }
             />)
         );
