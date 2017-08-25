@@ -14,6 +14,7 @@ export default class Post extends Component {
     };
 
     static propTypes = {
+        decreasePostsCount: PropTypes.func.isRequired,
         increasePostsCount: PropTypes.func.isRequired,
         message:            PropTypes.string.isRequired
     };
@@ -22,13 +23,21 @@ export default class Post extends Component {
         this.props.increasePostsCount();
     }
 
+    componentWillUnmount () {
+        this.props.decreasePostsCount();
+    }
+
+    deletePost = () => {
+        this.props.deletePost(this.props.index);
+    };
+
     render () {
         const { firstName, lastName, avatar } = this.context;
         const { message } = this.props;
 
         return (
             <section className = { Styles.post }>
-                <span />
+                <span onClick = { this.deletePost } />
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>

@@ -21,16 +21,31 @@ export default class Feed extends Component {
         });
     };
 
+    deletePost = (index) => {
+        this.setState({
+            posts: this.state.posts.filter((item, ind) => ind !== index)
+        });
+    };
+
     increasePostsCount = () => {
         this.setState({
             postsCount: this.state.postsCount + 1
         });
     };
 
+    decreasePostsCount = () => {
+        this.setState({
+            postsCount: this.state.postsCount - 1
+        });
+    };
+
     render () {
         const posts = this.state.posts.map((message, key) =>
             (<Post
+                decreasePostsCount = { this.decreasePostsCount }
+                deletePost = { this.deletePost }
                 increasePostsCount = { this.increasePostsCount }
+                index = { key }
                 key = { key }
                 message = { message }
             />)
