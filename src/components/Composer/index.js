@@ -14,7 +14,7 @@ export default class Composer extends Component {
 
     static propTypes = {
         createPost: PropTypes.func.isRequired
-    }
+    };
 
     constructor () {
         super();
@@ -22,7 +22,9 @@ export default class Composer extends Component {
         this.handleTextAreaMutation = ::this._handleTextAreaMutation;
     }
 
-    textAreaValue = '';
+    state = {
+        textAreaValue: ''
+    };
 
     _handleSubmit (event) {
         event.preventDefault();
@@ -30,12 +32,14 @@ export default class Composer extends Component {
     }
 
     _handleTextAreaMutation (event) {
-        this.textAreaValue = event.target.value;
-        this.forceUpdate();
+        this.setState({
+            textAreaValue: event.target.value
+        });
     }
 
     render () {
         const { firstName, avatar } = this.context;
+        const { textAreaValue } = this.state;
 
         return (
             <section className = { Styles.composer }>
@@ -43,7 +47,7 @@ export default class Composer extends Component {
                 <form onSubmit = { this.handleSubmit }>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }
-                        value = { this.textAreaValue }
+                        value = { textAreaValue }
                         onChange = { this.handleTextAreaMutation }
                     />
                     <input type = 'submit' value = 'Post' />
