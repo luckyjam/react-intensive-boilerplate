@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
+import TweenMax from 'gsap';
 import { CSSTransition } from 'react-transition-group';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+import Transition from 'react-transition-group/Transition';
 
 // Components
 import Composer from '../../components/Composer';
@@ -41,6 +43,14 @@ export default class Feed extends Component {
         });
     };
 
+    handleComposerAppear = () => {
+        TweenMax.fromTo(this.composer, 1.2, { y: -200 }, { y: 0 });
+    };
+
+    handleCounterAppear = () => {
+        TweenMax.fromTo(this.counter, 1.2, { opacity: 0 }, { opacity: 1 });
+    };
+
     render () {
         const posts = this.state.posts.map((message, key) =>
             (<CSSTransition
@@ -51,7 +61,7 @@ export default class Feed extends Component {
                     exit:        Styles.postExit,
                     exitActive:  Styles.postExitActive
                 } }
-                key = { key }
+                key = { message }
                 timeout = { { enter: 300, exit: 300 } }>
                 <Post
                     decreasePostsCount = { this.decreasePostsCount }
@@ -65,28 +75,24 @@ export default class Feed extends Component {
 
         return (
             <section className = { Styles.feed }>
-                <TransitionGroup>
-                    <CSSTransition
-                        appear
-                        classNames = { {
-                            appear:       Styles.composerAppear,
-                            appearActive: Styles.composerAppearActive
-                        } }
-                        timeout = { 300 }>
+                <Transition
+                    appear
+                    in
+                    timeout = { 500 }
+                    onEnter = { this.handleComposerAppear }>
+                    <div ref = { (composer) => this.composer = composer }>
                         <Composer createPost = { this.createPost } />
-                    </CSSTransition>
-                </TransitionGroup>
-                <TransitionGroup>
-                    <CSSTransition
-                        appear
-                        classNames = { {
-                            appear:       Styles.composerAppear,
-                            appearActive: Styles.composerAppearActive
-                        } }
-                        timeout = { 300 }>
+                    </div>
+                </Transition>
+                <Transition
+                    appear
+                    in
+                    timeout = { 500 }
+                    onEnter = { this.handleCounterAppear }>
+                    <div ref = { (counter) => this.counter = counter }>
                         <Counter count = { this.state.postsCount } />
-                    </CSSTransition>
-                </TransitionGroup>
+                    </div>
+                </Transition>
                 <TransitionGroup>
                     {posts}
                 </TransitionGroup>
