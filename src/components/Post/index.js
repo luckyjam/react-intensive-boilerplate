@@ -22,6 +22,10 @@ export default class Post extends Component {
         this.props.increasePostsCount();
     }
 
+    shouldComponentUpdate (nextProps) {
+        return nextProps.message !== this.props.message;
+    }
+
     render () {
         const { firstName, lastName, avatar } = this.context;
         const { message } = this.props;
