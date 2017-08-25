@@ -9,8 +9,7 @@ import { generateHash, getRandomColor } from '../../helpers';
 export default class Composer extends Component {
     static contextTypes = {
         avatar:    PropTypes.string.isRequired,
-        firstName: PropTypes.string.isRequired,
-        lastName:  PropTypes.string.isRequired
+        firstName: PropTypes.string.isRequired
     };
 
     static propTypes = {
