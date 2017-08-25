@@ -4,8 +4,9 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import TweenMax from 'gsap';
-import Transition from 'react-transition-group/Transition';
+import { CSSTransition } from 'react-transition-group';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+import Transition from 'react-transition-group/Transition';
 
 // Components
 import Composer from '../../components/Composer';
@@ -73,26 +74,28 @@ export default class Feed extends Component {
 
     handlePostExit = () => {
         TweenMax.fromTo(this.post, 0.5, { y: 0 }, { y: 1000 });
-    }
+    };
 
     render () {
-        const posts = this.state.posts.map((message, key) =>
-            (<Transition
-                in
-                key = { key }
-                timeout = { 500 }
-                onEnter = { this.handlePostEnter }
-                onExit = { this.handlePostExit }>
-                <div ref = { (post) => this.post = post }>
-                    <Post
-                        decreasePostsCount = { this.decreasePostsCount }
-                        deletePost = { this.deletePost }
-                        increasePostsCount = { this.increasePostsCount }
-                        index = { key }
-                        message = { message }
-                    />
-                </div>
-            </Transition>)
+        const posts = this.state.posts.map(({ message, id }, index) =>
+            (<CSSTransition
+                appear
+                classNames = { {
+                    enter:       Styles.postEnter,
+                    enterActive: Styles.postEnterActive,
+                    exit:        Styles.postExit,
+                    exitActive:  Styles.postExitActive
+                } }
+                key = { id }
+                timeout = { { enter: 300, exit: 300 } }>
+                <Post
+                    decreasePostsCount = { this.decreasePostsCount }
+                    deletePost = { this.deletePost }
+                    increasePostsCount = { this.increasePostsCount }
+                    index = { index }
+                    message = { message }
+                />
+            </CSSTransition>)
         );
 
         return (
