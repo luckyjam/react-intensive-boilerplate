@@ -13,8 +13,13 @@ export default class Post extends Component {
         lastName:  PropTypes.string.isRequired
     };
 
+    static propTypes = {
+        message: PropTypes.string.isRequired
+    };
+
     render () {
         const { firstName, lastName, avatar } = this.context;
+        const { message } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -25,7 +30,9 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {getCurrentTime()}
                 </a>
-                <p className = { Styles.message }>It is donuts time! Doh!</p>
+                <p className = { Styles.message }>
+                    {message}
+                </p>
             </section>
         );
     }

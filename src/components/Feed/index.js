@@ -13,14 +13,17 @@ export default class Feed extends Component {
         posts: []
     };
 
-    createPost = () => {
+    createPost = (message) => {
         this.setState({
-            posts: this.state.posts.concat('new post')
+            posts: this.state.posts.concat(message)
         });
     };
 
     render () {
-        const posts = this.state.posts.map((post, key) => <Post key = { key } />);
+        const posts = this.state.posts.map((message, key) =>
+            <Post key = { key } message = { message } />
+        );
+
 
         return (
             <section className = { Styles.feed }>
