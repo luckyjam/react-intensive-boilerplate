@@ -20,8 +20,8 @@ export default class Feed extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map((message, key) =>
-            <Post key = { key } message = { message } />
+        const posts = this.state.posts.map(({ message, id }) =>
+            <Post key = { id } message = { message } />
         );
 
         return (

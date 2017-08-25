@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
+import { generateHash } from '../../helpers';
 
 export default class Composer extends Component {
     static contextTypes = {
@@ -34,7 +35,11 @@ export default class Composer extends Component {
             return;
         }
 
-        this.props.createPost(this.state.textAreaValue);
+        this.props.createPost({
+            message: textAreaValue,
+            id:      generateHash(15)
+        });
+
         this.setState({
             textAreaValue: ''
         });
