@@ -86,5 +86,3 @@ describe('Composer component:', () => {
         expect(result.state()).toEqual(state);
     });
 });
-
-// TODO: update generateHash, remove lastName from Composer
