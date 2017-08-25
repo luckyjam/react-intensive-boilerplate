@@ -29,3 +29,13 @@ export function getRandomColor () {
 
     return color;
 }
+
+export function getFullName (firstName, lastName) {
+    if (typeof firstName !== 'string' || typeof lastName !== 'string') {
+        throw new Error(
+            'firstName and lastName arguments passed should be a string!'
+        );
+    }
+
+    return `${firstName} ${lastName}`;
+}
