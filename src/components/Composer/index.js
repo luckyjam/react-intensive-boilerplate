@@ -38,13 +38,8 @@ export default class Composer extends Component {
         }
 
         this.props.createPost({
-<<<<<<< HEAD
-            message: this.state.textAreaValue,
-            id:      generateHash(15)
-=======
             message: textAreaValue,
             id:      getUniqueID(15)
->>>>>>> d0a9d3f... rename helper functions
         });
 
         this.setState({

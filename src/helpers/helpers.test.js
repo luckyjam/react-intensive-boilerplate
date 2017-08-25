@@ -1,5 +1,5 @@
 // Core
-import { getFullName, getCurrentTime, generateHash, getRandomColor } from './';
+import { getFullName, getCurrentTime, getUniqueID, getRandomColor } from './';
 import moment from 'moment';
 
 const firstName = 'Brad';
@@ -34,26 +34,26 @@ describe('helpers: ', () => {
         expect(getCurrentTime()).toBe(moment().format('MMMM D h:mm:ss a'));
     });
 
-    test('generateHash function should be a function', () => {
-        expect(typeof generateHash).toBe('function');
+    test('getUniqueID function should be a function', () => {
+        expect(typeof getUniqueID).toBe('function');
     });
 
-    test('generateHash function return value should be a string', () => {
-        expect(typeof generateHash(1)).toBe('string');
+    test('getUniqueID function return value should be a string', () => {
+        expect(typeof getUniqueID(1)).toBe('string');
     });
 
-    test('generateHash function return string value should have corrent length', () => {
-        expect(generateHash(1).length).toBe(1);
-        expect(generateHash(5).length).toBe(5);
-        expect(generateHash(66).length).toBe(66);
+    test('getUniqueID function return string value should have corrent length', () => {
+        expect(getUniqueID(1).length).toBe(1);
+        expect(getUniqueID(5).length).toBe(5);
+        expect(getUniqueID(66).length).toBe(66);
     });
 
-    test('generateHash function return value should be an empty string if there were no arguments passed', () => {
-        expect(generateHash()).toBe('');
-        expect(generateHash(null)).toBe('');
-        expect(generateHash(undefined)).toBe('');
-        expect(generateHash([])).toBe('');
-        expect(generateHash({})).toBe('');
+    test('getUniqueID function return value should be an empty string if there were no arguments passed', () => {
+        expect(getUniqueID()).toBe('');
+        expect(getUniqueID(null)).toBe('');
+        expect(getUniqueID(undefined)).toBe('');
+        expect(getUniqueID([])).toBe('');
+        expect(getUniqueID({})).toBe('');
     });
 
     test('getRandomColor function should be a function', () => {
