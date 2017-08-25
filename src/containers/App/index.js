@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 
 // Instruments
 import PropTypes from 'prop-types';
-import homer from '../../theme/assets/homer.png';
+import avatar from '../../theme/assets/homer.png';
 
 // Components
 import Feed from '../../components/Feed';
-
-const lastName = 'Simpson';
 
 export default class App extends Component {
     static childContextTypes = {
@@ -19,7 +17,7 @@ export default class App extends Component {
 
     getChildContext () {
         return {
-            avatar:    homer,
+            avatar,
             firstName: 'Homer',
             lastName:  'Simpson'
         };
@@ -28,7 +26,7 @@ export default class App extends Component {
     render () {
         return (
             <section>
-                <Feed lastName = { lastName } />
+                <Feed />
             </section>
         );
     }
