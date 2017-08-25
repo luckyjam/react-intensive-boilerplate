@@ -9,6 +9,15 @@
     padding: 15px;
     background-color: $paletteColor3;
 
+    .composerAppear {
+        opacity: .01;
+    }
+
+    .composerAppearActive {
+        transition: opacity 300ms ease-in;
+        opacity: 1;
+    }
+
     .postEnter {
         opacity: .01;
     }
@@ -16,5 +25,14 @@
     .postEnterActive {
         transition: opacity 300ms ease-in;
         opacity: 1;
+    }
+
+    .postExit {
+        opacity: 1;
+    }
+
+    .postExitActive {
+        transition: opacity 300ms ease-out;
+        opacity: .01;
     }
 }

@@ -44,12 +44,15 @@ export default class Feed extends Component {
     render () {
         const posts = this.state.posts.map((message, key) =>
             (<CSSTransition
+                appear
                 classNames = { {
                     enter:       Styles.postEnter,
-                    enterActive: Styles.postEnterActive
+                    enterActive: Styles.postEnterActive,
+                    exit:        Styles.postExit,
+                    exitActive:  Styles.postExitActive
                 } }
                 key = { key }
-                timeout = { { enter: 300, exit: 0 } }>
+                timeout = { { enter: 300, exit: 300 } }>
                 <Post
                     decreasePostsCount = { this.decreasePostsCount }
                     deletePost = { this.deletePost }
@@ -62,8 +65,28 @@ export default class Feed extends Component {
 
         return (
             <section className = { Styles.feed }>
-                <Composer createPost = { this.createPost } />
-                <Counter count = { this.state.postsCount } />
+                <TransitionGroup>
+                    <CSSTransition
+                        appear
+                        classNames = { {
+                            appear:       Styles.composerAppear,
+                            appearActive: Styles.composerAppearActive
+                        } }
+                        timeout = { 300 }>
+                        <Composer createPost = { this.createPost } />
+                    </CSSTransition>
+                </TransitionGroup>
+                <TransitionGroup>
+                    <CSSTransition
+                        appear
+                        classNames = { {
+                            appear:       Styles.composerAppear,
+                            appearActive: Styles.composerAppearActive
+                        } }
+                        timeout = { 300 }>
+                        <Counter count = { this.state.postsCount } />
+                    </CSSTransition>
+                </TransitionGroup>
                 <TransitionGroup>
                     {posts}
                 </TransitionGroup>
