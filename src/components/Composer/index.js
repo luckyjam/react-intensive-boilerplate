@@ -52,7 +52,9 @@ export default class Composer extends Component {
 
     _handleTextAreaCopy (event) {
         event.preventDefault();
-        alert('This content is copyright protected.');
+        alert(
+            'This content is copyright protected. It is restricted from copying.'
+        );
     }
 
     _handleKeyPress () {
@@ -66,7 +68,8 @@ export default class Composer extends Component {
         const { textAreaValue } = this.state;
 
         return (
-            <section className = { Styles.composer }> <img alt = 'commenter' src = { avatar } />
+            <section className = { Styles.composer }>
+                {' '}<img alt = 'commenter' src = { avatar } />
                 <form onSubmit = { this.handleSubmit }>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }

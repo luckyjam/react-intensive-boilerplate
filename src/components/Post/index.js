@@ -28,6 +28,7 @@ export default class Post extends Component {
 
         return (
             <section className = { Styles.post }>
+                <span />
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
