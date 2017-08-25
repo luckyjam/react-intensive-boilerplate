@@ -15,12 +15,18 @@ export default class Post extends Component {
 
     static propTypes = {
         decreasePostsCount: PropTypes.func.isRequired,
+        deletePost:         PropTypes.func.isRequired,
         increasePostsCount: PropTypes.func.isRequired,
+        index:              PropTypes.number.isRequired,
         message:            PropTypes.string.isRequired
     };
 
     componentWillMount () {
         this.props.increasePostsCount();
+    }
+
+    shouldComponentUpdate (nextProps) {
+        return nextProps.message !== this.props.message;
     }
 
     componentWillUnmount () {
