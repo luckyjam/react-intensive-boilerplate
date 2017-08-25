@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
+import { getRandomColor } from '../../helpers';
 
 export default class Composer extends Component {
     static contextTypes = {
@@ -20,10 +21,13 @@ export default class Composer extends Component {
         super();
         this.handleSubmit = ::this._handleSubmit;
         this.handleTextAreaMutation = ::this._handleTextAreaMutation;
+        this.handleTextAreaCopy = ::this._handleTextAreaCopy;
+        this.handleKeyPress = ::this._handleKeyPress;
     }
 
     state = {
-        textAreaValue: ''
+        textAreaValue: '',
+        color:         '#000'
     };
 
     _handleSubmit (event) {
@@ -46,18 +50,33 @@ export default class Composer extends Component {
         });
     }
 
+    _handleTextAreaCopy (event) {
+        event.preventDefault();
+        alert('This content is copyright protected.');
+    }
+
+    _handleKeyPress () {
+        this.setState({
+            color: getRandomColor()
+        });
+    }
+
     render () {
         const { firstName, avatar } = this.context;
         const { textAreaValue } = this.state;
 
         return (
-            <section className = { Styles.composer }>
-                <img alt = 'commenter' src = { avatar } />
+            <section className = { Styles.composer }> <img alt = 'commenter' src = { avatar } />
                 <form onSubmit = { this.handleSubmit }>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }
+                        style = { {
+                            color: this.state.color
+                        } }
                         value = { textAreaValue }
                         onChange = { this.handleTextAreaMutation }
+                        onCopy = { this.handleTextAreaCopy }
+                        onKeyPress = { this.handleKeyPress }
                     />
                     <input type = 'submit' value = 'Post' />
                 </form>
