@@ -14,12 +14,12 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        message: PropTypes.string.isRequired
+        increasePostsCount: PropTypes.func.isRequired,
+        message:            PropTypes.string.isRequired
     };
 
     componentWillMount () {
-        console.log(`Компонент маунтиться в DOM браузера.
-А значит, с эти событием можно настроить некоторый функционал...`);
+        this.props.increasePostsCount();
     }
 
     render () {

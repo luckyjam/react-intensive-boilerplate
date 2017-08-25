@@ -11,7 +11,8 @@ import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
     state = {
-        posts: []
+        posts:      [],
+        postsCount: 0
     };
 
     createPost = (message) => {
@@ -20,15 +21,25 @@ export default class Feed extends Component {
         });
     };
 
+    increasePostsCount = () => {
+        this.setState({
+            postsCount: this.state.postsCount + 1
+        });
+    };
+
     render () {
         const posts = this.state.posts.map((message, key) =>
-            <Post key = { key } message = { message } />
+            (<Post
+                increasePostsCount = { this.increasePostsCount }
+                key = { key }
+                message = { message }
+            />)
         );
 
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
-                <Counter count = { this.state.posts.length } />
+                <Counter count = { this.state.postsCount } />
                 {posts}
             </section>
         );
