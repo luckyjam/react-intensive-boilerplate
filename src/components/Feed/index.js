@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
+import { CSSTransition } from 'react-transition-group';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 // Components
 import Composer from '../../components/Composer';
@@ -41,21 +43,30 @@ export default class Feed extends Component {
 
     render () {
         const posts = this.state.posts.map((message, key) =>
-            (<Post
-                decreasePostsCount = { this.decreasePostsCount }
-                deletePost = { this.deletePost }
-                increasePostsCount = { this.increasePostsCount }
-                index = { key }
+            (<CSSTransition
+                classNames = { {
+                    enter:       Styles.postEnter,
+                    enterActive: Styles.postEnterActive
+                } }
                 key = { key }
-                message = { message }
-            />)
+                timeout = { { enter: 300, exit: 0 } }>
+                <Post
+                    decreasePostsCount = { this.decreasePostsCount }
+                    deletePost = { this.deletePost }
+                    increasePostsCount = { this.increasePostsCount }
+                    index = { key }
+                    message = { message }
+                />
+            </CSSTransition>)
         );
 
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
                 <Counter count = { this.state.postsCount } />
-                {posts}
+                <TransitionGroup>
+                    {posts}
+                </TransitionGroup>
             </section>
         );
     }

@@ -14,7 +14,7 @@ linters:
     order: smacss
 
   SelectorFormat:
-    convention: camel_case
+    enabled: false
 
   EmptyLineBetweenBlocks:
     enabled: false
@@ -65,4 +65,7 @@ linters:
     enabled: false
 
   QualifyingElement:
+    enabled: false
+
+  MergeableSelector:
     enabled: false
