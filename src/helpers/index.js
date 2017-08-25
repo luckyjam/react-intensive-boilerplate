@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const getCurrentTime = () => moment().format('MMMM D h:mm:ss a');
 
-export const generateHash = (length, lowercase) => {
+export const getUniqueID = (length, lowercase) => {
     let text = '';
     let possible =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +19,7 @@ export const generateHash = (length, lowercase) => {
     return text;
 };
 
-export function getRandomColor () {
+export const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
 
@@ -28,6 +28,7 @@ export function getRandomColor () {
     }
 
     return color;
+<<<<<<< HEAD
 }
 
 export function getFullName (firstName, lastName) {
@@ -39,3 +40,6 @@ export function getFullName (firstName, lastName) {
 
     return `${firstName} ${lastName}`;
 }
+=======
+};
+>>>>>>> d0a9d3f... rename helper functions
