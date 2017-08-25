@@ -17,6 +17,11 @@ export default class Post extends Component {
         message: PropTypes.string.isRequired
     };
 
+    componentWillMount () {
+        console.log(`Компонент маунтиться в DOM браузера.
+А значит, с эти событием можно настроить некоторый функционал...`);
+    }
+
     render () {
         const { firstName, lastName, avatar } = this.context;
         const { message } = this.props;
