@@ -22,6 +22,10 @@ export default class Post extends Component {
 А значит, с эти событием можно настроить некоторый функционал...`);
     }
 
+    shouldComponentUpdate (nextProps) {
+        return nextProps.message !== this.props.message;
+    }
+
     render () {
         const { firstName, lastName, avatar } = this.context;
         const { message } = this.props;
