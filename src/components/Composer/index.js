@@ -52,9 +52,6 @@ export default class Composer extends Component {
 
     _handleTextAreaCopy (event) {
         event.preventDefault();
-        alert(
-            'This content is copyright protected. It is restricted from copying.'
-        );
     }
 
     _handleKeyPress () {
