@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const getCurrentTime = () => moment().format('MMMM D h:mm:ss a');
 
-export const generateHash = (length) => {
+export const getUniqueID = (length) => {
     let text = '';
     const possible =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -15,7 +15,7 @@ export const generateHash = (length) => {
     return text;
 };
 
-export function getRandomColor () {
+export const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
 
@@ -24,9 +24,9 @@ export function getRandomColor () {
     }
 
     return color;
-}
+};
 
-export function getFullName (firstName, lastName) {
+export const getFullName = (firstName, lastName) => {
     if (typeof firstName !== 'string' || typeof lastName !== 'string') {
         throw new Error(
             'firstName and lastName arguments passed should be a string!'
@@ -34,4 +34,4 @@ export function getFullName (firstName, lastName) {
     }
 
     return `${firstName} ${lastName}`;
-}
+};

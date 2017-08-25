@@ -4,13 +4,12 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
-import { generateHash, getRandomColor } from '../../helpers';
+import { getUniqueID, getRandomColor } from '../../helpers';
 
 export default class Composer extends Component {
     static contextTypes = {
         avatar:    PropTypes.string.isRequired,
-        firstName: PropTypes.string.isRequired,
-        lastName:  PropTypes.string.isRequired
+        firstName: PropTypes.string.isRequired
     };
 
     static propTypes = {
@@ -39,8 +38,13 @@ export default class Composer extends Component {
         }
 
         this.props.createPost({
+<<<<<<< HEAD
             message: this.state.textAreaValue,
             id:      generateHash(15)
+=======
+            message: textAreaValue,
+            id:      getUniqueID(15)
+>>>>>>> d0a9d3f... rename helper functions
         });
 
         this.setState({
