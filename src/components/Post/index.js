@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
-import { getCurrentTime } from '../../helpers';
+import moment from 'moment';
 
 export default class Post extends Component {
     static contextTypes = {
@@ -43,13 +43,17 @@ export default class Post extends Component {
 
         return (
             <section className = { Styles.post }>
+<<<<<<< HEAD
                 <span onClick = { this.deletePost } />
+=======
+                <span className = { Styles.cross } />
+>>>>>>> baa57ac... update post
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
                 <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {getCurrentTime()}
+                    {moment().format('MMMM D h:mm:ss a')}
                 </a>
                 <p className = { Styles.message }>
                     {message}
