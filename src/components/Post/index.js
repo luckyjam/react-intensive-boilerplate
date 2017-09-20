@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Styles from './styles.scss';
 import homer from '../../theme/assets/homer.png';
 import PropTypes from 'prop-types';
-import { getCurrentTime } from '../../helpers';
+import moment from 'moment';
 
 export default class Post extends Component {
     static propTypes = {
@@ -22,12 +22,13 @@ export default class Post extends Component {
 
         return (
             <section className = { Styles.post }>
+                <span className = { Styles.cross } />
                 <a>
                     <img alt = 'commenter' src = { homer } />
                 </a>
                 <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {getCurrentTime()}
+                    {moment().format('MMMM D h:mm:ss a')}
                 </a>
                 <p className = { Styles.message }>It is donuts time! Doh!</p>
             </section>
