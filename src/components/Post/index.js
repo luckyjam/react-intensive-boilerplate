@@ -10,6 +10,7 @@ export default class Post extends Component {
     render () {
         return (
             <section className = { Styles.post }>
+                <span className = { Styles.cross } />
                 <a>
                     <img alt = 'commenter' src = { homer } />
                 </a>
