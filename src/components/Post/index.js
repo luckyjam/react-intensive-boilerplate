@@ -43,7 +43,11 @@ export default class Post extends Component {
 
         return (
             <section className = { Styles.post }>
+<<<<<<< HEAD
                 <span className = { Styles.cross } onClick = { this.deletePost } />
+=======
+                <span className = { Styles.cross } />
+>>>>>>> baa57ac... update post
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
