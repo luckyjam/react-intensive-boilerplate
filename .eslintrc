@@ -19,7 +19,7 @@ env:
 
 rules:
   no-cond-assign: 1
-  no-console: 1
+  no-console: 0
   no-constant-condition: 1
   no-control-regex: 1
   no-debugger: 1
