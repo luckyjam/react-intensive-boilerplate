@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 // Components
 import Feed from '../../components/Feed';
 
+const firstName = 'Homer';
 const lastName = 'Simpson';
 
 export default class App extends Component {
@@ -16,7 +17,7 @@ export default class App extends Component {
 
     getChildContext () {
         return {
-            firstName: 'Homer'
+            firstName
         };
     }
 
