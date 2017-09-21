@@ -17,6 +17,7 @@ export default class Composer extends Component {
 
     constructor () {
         super();
+
         this.handleSubmit = ::this._handleSubmit;
         this.handleTextAreaMutation = ::this._handleTextAreaMutation;
     }
@@ -27,6 +28,7 @@ export default class Composer extends Component {
 
     _handleSubmit (event) {
         event.preventDefault();
+
         this.props.createPost();
     }
 

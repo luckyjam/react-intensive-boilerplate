@@ -9,15 +9,21 @@ import Composer from '../../components/Composer';
 import Post from '../../components/Post';
 
 export default class Feed extends Component {
+    constructor () {
+        super();
+
+        this.createPost = ::this._createPost;
+    }
+
     state = {
         posts: []
     };
 
-    createPost = () => {
-        this.setState({
-            posts: this.state.posts.concat('new post')
-        });
-    };
+    _createPost () {
+        this.setState(({ posts }) => ({
+            posts: ['new post', ...posts]
+        }));
+    }
 
     render () {
         const posts = this.state.posts.map((post, key) => <Post key = { key } />);
