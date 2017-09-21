@@ -26,16 +26,16 @@ export default class Composer extends Component {
         textAreaValue: ''
     };
 
-    _handleSubmit (event) {
-        event.preventDefault();
-
-        this.props.createPost();
-    }
-
     _handleTextAreaMutation (event) {
         this.setState({
             textAreaValue: event.target.value
         });
+    }
+
+    _handleSubmit (event) {
+        event.preventDefault();
+
+        this.props.createPost();
     }
 
     render () {
