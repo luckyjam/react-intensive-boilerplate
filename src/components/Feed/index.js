@@ -67,6 +67,7 @@ export default class Feed extends Component {
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
             <Post
+                _id = { _id }
                 comment = { comment }
                 increasePostsCount = { this.increasePostsCount }
                 key = { _id }
