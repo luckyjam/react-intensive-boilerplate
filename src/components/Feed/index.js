@@ -18,12 +18,47 @@ export default class Feed extends Component {
     constructor () {
         super();
 
+        this.getPosts = ::this._getPosts;
         this.createPost = ::this._createPost;
     }
 
     state = {
         posts: []
     };
+
+    componentWillMount () {
+        this.getPosts();
+
+        this.refetchPosts = setInterval(() => this.getPosts(), 5000);
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.refetchPosts);
+    }
+
+    _getPosts () {
+        fetch(this.context.api, {
+            method: 'GET'
+        })
+            .then((result) => {
+                if (result.status !== 200) {
+                    throw new Error('Posts were not loaded.');
+                }
+
+                this.setState({
+                    isPostsLoading: true
+                });
+
+                return result.json();
+            })
+            .then(({ data }) => {
+                this.setState({
+                    posts:          data,
+                    isPostsLoading: false
+                });
+            })
+            .catch(({ message }) => console.log(message)); // eslint-disable-line
+    }
 
     _createPost (post) {
         const { firstName, lastName, avatar, comment } = post;
