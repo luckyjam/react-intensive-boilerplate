@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-import homer from '../../theme/assets/homer.png';
+import homer from '../../theme/assets/homer.jpg';
 import Styles from './styles.scss';
 import moment from 'moment';
 
