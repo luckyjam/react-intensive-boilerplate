@@ -24,8 +24,7 @@ export default class Feed extends Component {
     }
 
     state = {
-        posts:      [],
-        postsCount: 0
+        posts: []
     };
 
     _createPost (post) {
@@ -65,20 +64,9 @@ export default class Feed extends Component {
         });
     };
 
-    increasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount + 1
-        });
-    };
-
-    decreasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount - 1
-        });
-    };
-
     render () {
-        const posts = this.state.posts.map(({ comment, _id }) => (
+        const { posts } = this.state;
+        const postsList = posts.map(({ comment, _id }) => (
             <CSSTransition
                 classNames = { {
                     enter:       Styles.postEnter,
@@ -91,9 +79,7 @@ export default class Feed extends Component {
                 <Post
                     _id = { _id }
                     comment = { comment }
-                    decreasePostsCount = { this.decreasePostsCount }
                     deletePost = { this.deletePost }
-                    increasePostsCount = { this.increasePostsCount }
                 />
             </CSSTransition>
         ));
@@ -119,12 +105,10 @@ export default class Feed extends Component {
                             appearActive: Styles.initialAppearActive
                         } }
                         timeout = { 500 }>
-                        <Counter count = { this.state.postsCount } />
+                        <Counter count = { postsList.length } />
                     </CSSTransition>
                 </TransitionGroup>
-                <TransitionGroup>
-                    {posts}
-                </TransitionGroup>
+                <TransitionGroup>{postsList}</TransitionGroup>
             </section>
         );
     }
