@@ -21,6 +21,12 @@ export default class Post extends Component {
         index:              PropTypes.number.isRequired
     };
 
+    constructor () {
+        super();
+
+        this.deletePost = ::this._deletePost;
+    }
+
     componentWillMount () {
         this.props.increasePostsCount();
     }
@@ -33,9 +39,9 @@ export default class Post extends Component {
         this.props.decreasePostsCount();
     }
 
-    deletePost = () => {
-        this.props.deletePost(this.props.index);
-    };
+    _deletePost () {
+        this.props.deletePost(this.props._id);
+    }
 
     render () {
         const { firstName, lastName, avatar } = this.context;
