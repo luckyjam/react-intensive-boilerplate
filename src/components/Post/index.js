@@ -14,7 +14,7 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        message: PropTypes.string.isRequired
+        comment: PropTypes.string.isRequired
     };
 
     componentWillMount () {
@@ -28,7 +28,7 @@ export default class Post extends Component {
 
     render () {
         const { firstName, lastName, avatar } = this.context;
-        const { message } = this.props;
+        const { comment } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -40,8 +40,8 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {moment().format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.message }>
-                    {message}
+                <p className = { Styles.comment }>
+                    {comment}
                 </p>
             </section>
         );
