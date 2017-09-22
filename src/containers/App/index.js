@@ -8,6 +8,12 @@ import avatar from '../../theme/assets/homer.png';
 // Components
 import Feed from '../../components/Feed';
 
+const options = {
+    avatar,
+    firstName: 'Homer',
+    lastName:  'Simpson'
+};
+
 export default class App extends Component {
     static childContextTypes = {
         avatar:    PropTypes.string.isRequired,
@@ -16,11 +22,7 @@ export default class App extends Component {
     };
 
     getChildContext () {
-        return {
-            avatar,
-            firstName: 'Homer',
-            lastName:  'Simpson'
-        };
+        return options;
     }
 
     render () {
