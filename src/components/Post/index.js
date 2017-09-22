@@ -35,9 +35,13 @@ export default class Post extends Component {
     render () {
         const { avatar, comment, created, firstName, lastName } = this.props;
 
+        const isAbleToDelete = (
+            <span className = { Styles.cross } onClick = { this.deletePost } />
+        );
+
         return (
             <section className = { Styles.post }>
-                <span className = { Styles.cross } onClick = { this.deletePost } />
+                {isAbleToDelete}
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
