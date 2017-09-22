@@ -28,8 +28,8 @@ export default class Composer extends Component {
     }
 
     state = {
-        textAreaValue: '',
-        color:         '#000'
+        textAreaValue:     '',
+        avatarBorderColor: '#90949C'
     };
 
     _handleTextAreaMutation (event) {
@@ -68,23 +68,26 @@ export default class Composer extends Component {
 
     _handleKeyPress () {
         this.setState({
-            color: getRandomColor()
+            avatarBorderColor: getRandomColor()
         });
     }
 
     render () {
         const { firstName, avatar } = this.context;
-        const { textAreaValue } = this.state;
+        const { textAreaValue, avatarBorderColor } = this.state;
 
         return (
             <section className = { Styles.composer }>
-                <img alt = 'commenter' src = { avatar } />
+                <img
+                    alt = 'commenter'
+                    src = { avatar }
+                    style = { {
+                        borderColor: `${avatarBorderColor}`
+                    } }
+                />
                 <form onSubmit = { this.handleSubmit }>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }
-                        style = { {
-                            color: this.state.color
-                        } }
                         value = { textAreaValue }
                         onChange = { this.handleTextAreaMutation }
                         onCopy = { this.handleTextAreaCopy }
