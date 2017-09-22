@@ -5,9 +5,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Styles from './styles.scss';
 import TweenMax from 'gsap';
-import { CSSTransition } from 'react-transition-group';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
-import Transition from 'react-transition-group/Transition';
+import {
+    CSSTransition,
+    Transition,
+    TransitionGroup
+} from 'react-transition-group';
 
 // Components
 import Composer from '../../components/Composer';
@@ -27,6 +29,8 @@ export default class Feed extends Component {
         this.getPosts = ::this._getPosts;
         this.createPost = ::this._createPost;
         this.deletePost = ::this._deletePost;
+        this.handleComposerAppear = ::this._handleComposerAppear;
+        this.handleCounterAppear = ::this._handleCounterAppear;
     }
 
     state = {
@@ -129,13 +133,35 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message)); // eslint-disable-line
     }
 
-    handleComposerAppear = () => {
-        TweenMax.fromTo(this.composer, 1.2, { y: -200 }, { y: 0 });
-    };
+    _handleComposerAppear () {
+        TweenMax.fromTo(
+            this.composer,
+            1,
+            {
+                y:       -200,
+                opacity: 0
+            },
+            {
+                y:       0,
+                opacity: 1
+            }
+        );
+    }
 
-    handleCounterAppear = () => {
-        TweenMax.fromTo(this.counter, 1.2, { opacity: 0 }, { opacity: 1 });
-    };
+    _handleCounterAppear () {
+        TweenMax.fromTo(
+            this.counter,
+            1,
+            {
+                x:       -1000,
+                opacity: 0
+            },
+            {
+                x:       0,
+                opacity: 1
+            }
+        );
+    }
 
     handlePostmanAppear = () => {
         new Promise((resolve) => {
@@ -173,7 +199,7 @@ export default class Feed extends Component {
                         exitActive:  Styles.postExitActive
                     } }
                     key = { _id }
-                    timeout = { { enter: 300, exit: 300 } }>
+                    timeout = { { enter: 300, exit: 500 } }>
                     <Post
                         _id = { _id }
                         avatar = { avatar }
@@ -196,7 +222,7 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
-                    timeout = { 500 }
+                    timeout = { 1000 }
                     onEnter = { this.handleComposerAppear }>
                     <div ref = { (composer) => this.composer = composer }>
                         <Composer createPost = { this.createPost } />
@@ -205,7 +231,7 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
-                    timeout = { 500 }
+                    timeout = { 1000 }
                     onEnter = { this.handleCounterAppear }>
                     <div ref = { (counter) => this.counter = counter }>
                         <Counter count = { postsList.length } />
