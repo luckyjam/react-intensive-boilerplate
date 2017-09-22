@@ -96,6 +96,7 @@ export default class Feed extends Component {
     render () {
         const { posts } = this.state;
 
+<<<<<<< HEAD
         const postsList = posts.map(({ comment, _id }, index) => (
             <Post
                 _id = { _id }
@@ -106,6 +107,21 @@ export default class Feed extends Component {
                 message = { comment }
             />
         ));
+=======
+        const postsList = posts.map(
+            ({ avatar, comment, created, _id, firstName, lastName }) => (
+                <Post
+                    _id = { _id }
+                    avatar = { avatar }
+                    comment = { comment }
+                    created = { created }
+                    firstName = { firstName }
+                    key = { _id }
+                    lastName = { lastName }
+                />
+            )
+        );
+>>>>>>> 4206282... update real data
 
         return (
             <section className = { Styles.feed }>
