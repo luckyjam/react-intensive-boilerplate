@@ -98,6 +98,7 @@ export default class Feed extends Component {
 
         const postsList = posts.map(({ comment, _id }, index) => (
             <Post
+                _id = { _id }
                 comment = { comment }
                 deletePost = { this.deletePost }
                 index = { index }
