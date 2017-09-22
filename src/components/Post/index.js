@@ -14,28 +14,24 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        _id:                PropTypes.string.isRequired,
-        comment:            PropTypes.string.isRequired,
-        decreasePostsCount: PropTypes.func.isRequired,
-        deletePost:         PropTypes.func.isRequired,
-        increasePostsCount: PropTypes.func.isRequired
+        _id:        PropTypes.string.isRequired,
+        comment:    PropTypes.string.isRequired,
+        deletePost: PropTypes.func.isRequired
     };
 
-    componentWillMount () {
-        this.props.increasePostsCount();
+    constructor () {
+        super();
+
+        this.deletePost = ::this._deletePost;
     }
 
     shouldComponentUpdate (nextProps) {
         return nextProps._id !== this.props._id;
     }
 
-    componentWillUnmount () {
-        this.props.decreasePostsCount();
-    }
-
-    deletePost = () => {
+    _deletePost () {
         this.props.deletePost(this.props._id);
-    };
+    }
 
     render () {
         const { firstName, lastName, avatar } = this.context;
