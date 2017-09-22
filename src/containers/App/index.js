@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // Instruments
 import PropTypes from 'prop-types';
-import avatar from '../../theme/assets/homer.png';
+import avatar from '../../theme/assets/homer.jpg';
 
 // Components
 import Feed from '../../components/Feed';
