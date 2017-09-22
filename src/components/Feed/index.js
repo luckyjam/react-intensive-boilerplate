@@ -46,16 +46,11 @@ export default class Feed extends Component {
                     throw new Error('Posts were not loaded.');
                 }
 
-                this.setState({
-                    isPostsLoading: true
-                });
-
                 return result.json();
             })
             .then(({ data }) => {
                 this.setState({
-                    posts:          data,
-                    isPostsLoading: false
+                    posts: data
                 });
             })
             .catch(({ message }) => console.log(message)); // eslint-disable-line
