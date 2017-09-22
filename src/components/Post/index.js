@@ -7,16 +7,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 export default class Post extends Component {
-    static contextTypes = {
-        avatar:    PropTypes.string.isRequired,
-        firstName: PropTypes.string.isRequired,
-        lastName:  PropTypes.string.isRequired
-    };
-
     static propTypes = {
         _id:        PropTypes.string.isRequired,
+        avatar:     PropTypes.string.isRequired,
         comment:    PropTypes.string.isRequired,
-        deletePost: PropTypes.func.isRequired
+        created:    PropTypes.number.isRequired,
+        deletePost: PropTypes.func.isRequired,
+        firstName:  PropTypes.string.isRequired,
+        lastName:   PropTypes.string.isRequired
     };
 
     constructor () {
@@ -34,8 +32,7 @@ export default class Post extends Component {
     }
 
     render () {
-        const { firstName, lastName, avatar } = this.context;
-        const { comment } = this.props;
+        const { avatar, comment, created, firstName, lastName } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -45,7 +42,7 @@ export default class Post extends Component {
                 </a>
                 <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {moment().format('MMMM D h:mm:ss a')}
+                    {moment.unix(created).format('MMMM D h:mm:ss a')}
                 </a>
                 <p className = { Styles.comment }>{comment}</p>
             </section>
