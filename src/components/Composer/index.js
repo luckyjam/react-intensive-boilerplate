@@ -81,7 +81,6 @@ export default class Composer extends Component {
 
         return (
             <section className = { Styles.composer }>
-                {' '}
                 <img alt = 'commenter' src = { avatar } />
                 <form onSubmit = { this.handleSubmit }>
                     <textarea

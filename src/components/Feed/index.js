@@ -19,6 +19,7 @@ export default class Feed extends Component {
         super();
 
         this.createPost = ::this._createPost;
+        this.increasePostsCount = ::this._increasePostsCount;
     }
 
     state = {
@@ -57,11 +58,11 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message)); // eslint-disable-line
     }
 
-    increasePostsCount = () => {
+    _increasePostsCount () {
         this.setState({
             postsCount: this.state.postsCount + 1
         });
-    };
+    }
 
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
