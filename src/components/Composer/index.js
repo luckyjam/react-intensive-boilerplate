@@ -18,6 +18,7 @@ export default class Composer extends Component {
 
     constructor () {
         super();
+
         this.handleSubmit = ::this._handleSubmit;
         this.handleTextAreaMutation = ::this._handleTextAreaMutation;
         this.handleTextAreaCopy = ::this._handleTextAreaCopy;
@@ -29,8 +30,15 @@ export default class Composer extends Component {
         color:         '#000'
     };
 
+    _handleTextAreaMutation (event) {
+        this.setState({
+            textAreaValue: event.target.value
+        });
+    }
+
     _handleSubmit (event) {
         event.preventDefault();
+
         const { textAreaValue } = this.state;
 
         if (!textAreaValue) {
@@ -38,8 +46,8 @@ export default class Composer extends Component {
         }
 
         this.props.createPost({
-            message: textAreaValue,
-            id:      getUniqueID(15)
+            comment: textAreaValue,
+            _id:     getUniqueID(15)
         });
 
         this.setState({
@@ -47,6 +55,7 @@ export default class Composer extends Component {
         });
     }
 
+<<<<<<< HEAD
     _handleTextAreaMutation (event) {
         this.setState({
             textAreaValue: event.target.value
@@ -66,6 +75,8 @@ export default class Composer extends Component {
         });
     }
 
+=======
+>>>>>>> 6ed5574... refactor composer
     render () {
         const { firstName, avatar } = this.context;
         const { textAreaValue } = this.state;

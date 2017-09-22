@@ -10,16 +10,22 @@ import Post from '../../components/Post';
 import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
+    constructor () {
+        super();
+
+        this.createPost = ::this._createPost;
+    }
+
     state = {
         posts:      [],
         postsCount: 0
     };
 
-    createPost = (message) => {
-        this.setState({
-            posts: this.state.posts.concat(message)
-        });
-    };
+    _createPost (post) {
+        this.setState(({ posts }) => ({
+            posts: [post, ...posts]
+        }));
+    }
 
     increasePostsCount = () => {
         this.setState({
@@ -28,6 +34,7 @@ export default class Feed extends Component {
     };
 
     render () {
+<<<<<<< HEAD
         const posts = this.state.posts.map(({ message, id }) =>
             (<Post
                 increasePostsCount = { this.increasePostsCount }
@@ -35,6 +42,11 @@ export default class Feed extends Component {
                 message = { message }
             />)
         );
+=======
+        const posts = this.state.posts.map(({ comment, _id }) => (
+            <Post comment = { comment } key = { _id } />
+        ));
+>>>>>>> 6ed5574... refactor composer
 
         return (
             <section className = { Styles.feed }>
