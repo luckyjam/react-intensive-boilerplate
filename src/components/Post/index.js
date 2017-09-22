@@ -14,11 +14,9 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        _id:                PropTypes.string.isRequired,
-        comment:            PropTypes.string.isRequired,
-        decreasePostsCount: PropTypes.func.isRequired,
-        deletePost:         PropTypes.func.isRequired,
-        increasePostsCount: PropTypes.func.isRequired
+        _id:        PropTypes.string.isRequired,
+        comment:    PropTypes.string.isRequired,
+        deletePost: PropTypes.func.isRequired
     };
 
     constructor () {
@@ -27,27 +25,13 @@ export default class Post extends Component {
         this.deletePost = ::this._deletePost;
     }
 
-    componentWillMount () {
-        this.props.increasePostsCount();
-    }
-
     shouldComponentUpdate (nextProps) {
         return nextProps._id !== this.props._id;
     }
 
-    componentWillUnmount () {
-        this.props.decreasePostsCount();
-    }
-
-<<<<<<< HEAD
-    deletePost = () => {
-        this.props.deletePost(this.props._id);
-    };
-=======
     _deletePost () {
         this.props.deletePost(this.props._id);
     }
->>>>>>> 55f32f8... fix delete post method
 
     render () {
         const { firstName, lastName, avatar } = this.context;
