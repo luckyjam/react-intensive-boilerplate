@@ -14,7 +14,7 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        _id:                PropTypes.number.isRequired,
+        _id:                PropTypes.string.isRequired,
         comment:            PropTypes.string.isRequired,
         decreasePostsCount: PropTypes.func.isRequired,
         deletePost:         PropTypes.func.isRequired,
@@ -32,7 +32,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.comment !== this.props.comment;
+        return nextProps._id !== this.props._id;
     }
 
     componentWillUnmount () {
