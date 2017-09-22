@@ -14,11 +14,11 @@ export default class Post extends Component {
     };
 
     static propTypes = {
+        _id:                PropTypes.number.isRequired,
         comment:            PropTypes.string.isRequired,
         decreasePostsCount: PropTypes.func.isRequired,
         deletePost:         PropTypes.func.isRequired,
-        increasePostsCount: PropTypes.func.isRequired,
-        index:              PropTypes.number.isRequired
+        increasePostsCount: PropTypes.func.isRequired
     };
 
     constructor () {
