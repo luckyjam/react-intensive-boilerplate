@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
-import { getFullName } from '../../helpers';
 import moment from 'moment';
 
 export default class Post extends Component {
@@ -22,6 +21,12 @@ export default class Post extends Component {
         increasePostsCount: PropTypes.func.isRequired
     };
 
+    constructor () {
+        super();
+
+        this.deletePost = ::this._deletePost;
+    }
+
     componentWillMount () {
         this.props.increasePostsCount();
     }
@@ -34,9 +39,9 @@ export default class Post extends Component {
         this.props.decreasePostsCount();
     }
 
-    deletePost = () => {
+    _deletePost () {
         this.props.deletePost(this.props._id);
-    };
+    }
 
     render () {
         const { firstName, lastName, avatar } = this.context;
@@ -48,9 +53,7 @@ export default class Post extends Component {
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
-                <a className = { Styles.name }>
-                    {getFullName(firstName, lastName)}
-                </a>
+                <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
                     {moment().format('MMMM D h:mm:ss a')}
                 </a>
