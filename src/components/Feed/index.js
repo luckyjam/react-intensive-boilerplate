@@ -22,8 +22,7 @@ export default class Feed extends Component {
     }
 
     state = {
-        posts:      [],
-        postsCount: 0
+        posts: []
     };
 
     _createPost (post) {
@@ -63,36 +62,24 @@ export default class Feed extends Component {
         });
     };
 
-    increasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount + 1
-        });
-    };
-
-    decreasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount - 1
-        });
-    };
-
     render () {
-        const posts = this.state.posts.map(({ comment, _id }, index) =>
-            (<Post
+        const { posts } = this.state;
+
+        const postsList = posts.map(({ comment, _id }, index) => (
+            <Post
                 comment = { comment }
-                decreasePostsCount = { this.decreasePostsCount }
                 deletePost = { this.deletePost }
-                increasePostsCount = { this.increasePostsCount }
                 index = { index }
                 key = { _id }
                 message = { comment }
-            />)
-        );
+            />
+        ));
 
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
-                <Counter count = { this.state.postsCount } />
-                {posts}
+                <Counter count = { postsList.length } />
+                {postsList}
             </section>
         );
     }
