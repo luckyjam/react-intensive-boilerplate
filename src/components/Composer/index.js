@@ -18,6 +18,7 @@ export default class Composer extends Component {
 
     constructor () {
         super();
+
         this.handleSubmit = ::this._handleSubmit;
         this.handleTextAreaMutation = ::this._handleTextAreaMutation;
     }
@@ -26,8 +27,15 @@ export default class Composer extends Component {
         textAreaValue: ''
     };
 
+    _handleTextAreaMutation (event) {
+        this.setState({
+            textAreaValue: event.target.value
+        });
+    }
+
     _handleSubmit (event) {
         event.preventDefault();
+
         const { textAreaValue } = this.state;
 
         if (!textAreaValue) {
@@ -35,18 +43,12 @@ export default class Composer extends Component {
         }
 
         this.props.createPost({
-            message: textAreaValue,
-            id:      getUniqueID(15)
+            comment: textAreaValue,
+            _id:     getUniqueID(15)
         });
 
         this.setState({
             textAreaValue: ''
-        });
-    }
-
-    _handleTextAreaMutation (event) {
-        this.setState({
-            textAreaValue: event.target.value
         });
     }
 
