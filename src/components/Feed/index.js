@@ -22,8 +22,7 @@ export default class Feed extends Component {
     }
 
     state = {
-        posts:      [],
-        postsCount: 0
+        posts: []
     };
 
     _createPost (post) {
@@ -57,26 +56,18 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message)); // eslint-disable-line
     }
 
-    increasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount + 1
-        });
-    };
-
     render () {
-        const posts = this.state.posts.map(({ comment, _id }) => (
-            <Post
-                comment = { comment }
-                increasePostsCount = { this.increasePostsCount }
-                key = { _id }
-            />
+        const { posts } = this.state;
+
+        const postsList = posts.map(({ comment, _id }) => (
+            <Post comment = { comment } key = { _id } />
         ));
 
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
-                <Counter count = { this.state.postsCount } />
-                {posts}
+                <Counter count = { postsList.length } />
+                {postsList}
             </section>
         );
     }
