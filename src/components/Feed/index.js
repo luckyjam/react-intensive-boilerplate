@@ -163,23 +163,30 @@ export default class Feed extends Component {
 
     render () {
         const { posts, isPostsFetching } = this.state;
-        const postsList = posts.map(({ comment, _id }) => (
-            <CSSTransition
-                classNames = { {
-                    enter:       Styles.postEnter,
-                    enterActive: Styles.postEnterActive,
-                    exit:        Styles.postExit,
-                    exitActive:  Styles.postExitActive
-                } }
-                key = { _id }
-                timeout = { { enter: 300, exit: 300 } }>
-                <Post
-                    _id = { _id }
-                    comment = { comment }
-                    deletePost = { this.deletePost }
-                />
-            </CSSTransition>
-        ));
+        const postsList = posts.map(
+            ({ avatar, comment, created, firstName, lastName, _id }) => (
+                <CSSTransition
+                    classNames = { {
+                        enter:       Styles.postEnter,
+                        enterActive: Styles.postEnterActive,
+                        exit:        Styles.postExit,
+                        exitActive:  Styles.postExitActive
+                    } }
+                    key = { _id }
+                    timeout = { { enter: 300, exit: 300 } }>
+                    <Post
+                        _id = { _id }
+                        avatar = { avatar }
+                        comment = { comment }
+                        created = { created }
+                        deletePost = { this.deletePost }
+                        firstName = { firstName }
+                        key = { _id }
+                        lastName = { lastName }
+                    />
+                </CSSTransition>
+            )
+        );
 
         const spinner = isPostsFetching ? <Spinner /> : null;
 
