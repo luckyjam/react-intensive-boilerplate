@@ -14,6 +14,7 @@ export default class Post extends Component {
     };
 
     static propTypes = {
+        _id:     PropTypes.string.isRequired,
         comment: PropTypes.string.isRequired
     };
 
@@ -23,7 +24,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.comment !== this.props.comment;
+        return nextProps._id !== this.props._id;
     }
 
     render () {
@@ -40,9 +41,7 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {moment().format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.comment }>
-                    {comment}
-                </p>
+                <p className = { Styles.comment }>{comment}</p>
             </section>
         );
     }
