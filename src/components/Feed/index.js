@@ -89,9 +89,19 @@ export default class Feed extends Component {
     render () {
         const { posts } = this.state;
 
-        const postsList = posts.map(({ comment, _id }) => (
-            <Post _id = { _id } comment = { comment } key = { _id } />
-        ));
+        const postsList = posts.map(
+            ({ avatar, comment, created, _id, firstName, lastName }) => (
+                <Post
+                    _id = { _id }
+                    avatar = { avatar }
+                    comment = { comment }
+                    created = { created }
+                    firstName = { firstName }
+                    key = { _id }
+                    lastName = { lastName }
+                />
+            )
+        );
 
         return (
             <section className = { Styles.feed }>
