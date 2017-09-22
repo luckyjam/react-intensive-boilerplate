@@ -25,6 +25,7 @@ export default class Feed extends Component {
 
         this.getPosts = ::this._getPosts;
         this.createPost = ::this._createPost;
+        this.deletePost = ::this._deletePost;
     }
 
     state = {
@@ -96,11 +97,30 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message)); // eslint-disable-line
     }
 
-    deletePost = (_id) => {
-        this.setState({
-            posts: this.state.posts.filter((item) => item._id !== _id)
-        });
-    };
+    _deletePost (_id) {
+        const { posts } = this.state;
+        const { api } = this.context;
+
+        fetch(`${api}/${_id}`, {
+            method: 'DELETE'
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error('Post was not deleted.');
+                }
+
+                this.setState({
+                    isPostsLoading: true
+                });
+            })
+            .then(() =>
+                this.setState({
+                    posts:          posts.filter((post) => post._id !== _id),
+                    isPostsLoading: false
+                })
+            )
+            .catch(({ message }) => console.log(message)); // eslint-disable-line
+    }
 
     handleComposerAppear = () => {
         TweenMax.fromTo(this.composer, 1.2, { y: -200 }, { y: 0 });
