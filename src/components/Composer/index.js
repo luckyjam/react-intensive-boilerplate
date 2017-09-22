@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
-import homer from '../../theme/assets/homer.png';
+import homer from '../../theme/assets/homer.jpg';
 
 export default class Composer extends Component {
     render () {
