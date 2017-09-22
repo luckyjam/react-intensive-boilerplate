@@ -11,7 +11,8 @@ import Feed from '../../components/Feed';
 const options = {
     avatar,
     firstName: 'Homer',
-    lastName:  'Simpson'
+    lastName:  'Simpson',
+    api:       'http://localhost:3030/feed'
 };
 
 export default class App extends Component {
