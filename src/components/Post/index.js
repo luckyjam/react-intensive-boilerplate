@@ -14,14 +14,9 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        _id:                PropTypes.string.isRequired,
-        comment:            PropTypes.string.isRequired,
-        increasePostsCount: PropTypes.func.isRequired
+        _id:     PropTypes.string.isRequired,
+        comment: PropTypes.string.isRequired
     };
-
-    componentWillMount () {
-        this.props.increasePostsCount();
-    }
 
     shouldComponentUpdate (nextProps) {
         return nextProps._id !== this.props._id;
