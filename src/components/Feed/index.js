@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import PropTypes from 'prop-types';
 import Styles from './styles.scss';
-import { CSSTransition } from 'react-transition-group';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // Components
 import Composer from '../../components/Composer';
