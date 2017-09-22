@@ -14,20 +14,26 @@ import Post from '../../components/Post';
 import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
+    constructor () {
+        super();
+
+        this.createPost = ::this._createPost;
+    }
+
     state = {
         posts:      [],
         postsCount: 0
     };
 
-    createPost = (message) => {
-        this.setState({
-            posts: this.state.posts.concat(message)
-        });
-    };
+    _createPost (post) {
+        this.setState(({ posts }) => ({
+            posts: [post, ...posts]
+        }));
+    }
 
-    deletePost = (index) => {
+    deletePost = (_id) => {
         this.setState({
-            posts: this.state.posts.filter((item, ind) => ind !== index)
+            posts: this.state.posts.filter((item) => item._id !== _id)
         });
     };
 
@@ -52,26 +58,25 @@ export default class Feed extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map(({ message, id }, index) =>
-            (<CSSTransition
-                appear
+        const posts = this.state.posts.map(({ comment, _id }) => (
+            <CSSTransition
                 classNames = { {
                     enter:       Styles.postEnter,
                     enterActive: Styles.postEnterActive,
                     exit:        Styles.postExit,
                     exitActive:  Styles.postExitActive
                 } }
-                key = { id }
+                key = { _id }
                 timeout = { { enter: 300, exit: 300 } }>
                 <Post
+                    _id = { _id }
+                    comment = { comment }
                     decreasePostsCount = { this.decreasePostsCount }
                     deletePost = { this.deletePost }
                     increasePostsCount = { this.increasePostsCount }
-                    index = { index }
-                    message = { message }
                 />
-            </CSSTransition>)
-        );
+            </CSSTransition>
+        ));
 
         return (
             <section className = { Styles.feed }>

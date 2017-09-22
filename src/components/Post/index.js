@@ -14,11 +14,11 @@ export default class Post extends Component {
     };
 
     static propTypes = {
+        _id:                PropTypes.string.isRequired,
+        comment:            PropTypes.string.isRequired,
         decreasePostsCount: PropTypes.func.isRequired,
         deletePost:         PropTypes.func.isRequired,
-        increasePostsCount: PropTypes.func.isRequired,
-        index:              PropTypes.number.isRequired,
-        message:            PropTypes.string.isRequired
+        increasePostsCount: PropTypes.func.isRequired
     };
 
     componentWillMount () {
@@ -26,7 +26,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.message !== this.props.message;
+        return nextProps.comment !== this.props.comment;
     }
 
     componentWillUnmount () {
@@ -34,12 +34,12 @@ export default class Post extends Component {
     }
 
     deletePost = () => {
-        this.props.deletePost(this.props.index);
+        this.props.deletePost(this.props._id);
     };
 
     render () {
         const { firstName, lastName, avatar } = this.context;
-        const { message } = this.props;
+        const { comment } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -51,9 +51,7 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {moment().format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.message }>
-                    {message}
-                </p>
+                <p className = { Styles.comment }>{comment}</p>
             </section>
         );
     }
