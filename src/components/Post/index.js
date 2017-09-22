@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
-import { getCurrentTime } from '../../helpers';
+import moment from 'moment';
 
 export default class Post extends Component {
     static contextTypes = {
@@ -14,11 +14,11 @@ export default class Post extends Component {
     };
 
     static propTypes = {
+        comment:            PropTypes.string.isRequired,
         decreasePostsCount: PropTypes.func.isRequired,
         deletePost:         PropTypes.func.isRequired,
         increasePostsCount: PropTypes.func.isRequired,
-        index:              PropTypes.number.isRequired,
-        message:            PropTypes.string.isRequired
+        index:              PropTypes.number.isRequired
     };
 
     componentWillMount () {
@@ -26,7 +26,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.message !== this.props.message;
+        return nextProps.comment !== this.props.comment;
     }
 
     componentWillUnmount () {
@@ -39,7 +39,7 @@ export default class Post extends Component {
 
     render () {
         const { firstName, lastName, avatar } = this.context;
-        const { message } = this.props;
+        const { comment } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -49,11 +49,9 @@ export default class Post extends Component {
                 </a>
                 <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {getCurrentTime()}
+                    {moment().format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.message }>
-                    {message}
-                </p>
+                <p className = { Styles.comment }>{comment}</p>
             </section>
         );
     }

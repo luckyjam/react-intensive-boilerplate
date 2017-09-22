@@ -10,16 +10,22 @@ import Post from '../../components/Post';
 import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
+    constructor () {
+        super();
+
+        this.createPost = ::this._createPost;
+    }
+
     state = {
         posts:      [],
         postsCount: 0
     };
 
-    createPost = (message) => {
-        this.setState({
-            posts: this.state.posts.concat(message)
-        });
-    };
+    _createPost (post) {
+        this.setState(({ posts }) => ({
+            posts: [post, ...posts]
+        }));
+    }
 
     deletePost = (index) => {
         this.setState({
@@ -40,14 +46,15 @@ export default class Feed extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map(({ message, id }, index) =>
+        const posts = this.state.posts.map(({ comment, _id }, index) =>
             (<Post
+                comment = { comment }
                 decreasePostsCount = { this.decreasePostsCount }
                 deletePost = { this.deletePost }
                 increasePostsCount = { this.increasePostsCount }
                 index = { index }
-                key = { id }
-                message = { message }
+                key = { _id }
+                message = { comment }
             />)
         );
 
