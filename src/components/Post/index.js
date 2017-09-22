@@ -24,7 +24,7 @@ export default class Post extends Component {
                 </a>
                 <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {moment().format('MMMM D h:mm:ss a')}
+                    { moment().format('MMMM D h:mm:ss a') }
                 </a>
                 <p className = { Styles.message }>It is donuts time! Doh!</p>
             </section>
