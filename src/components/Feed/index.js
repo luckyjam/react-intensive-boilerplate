@@ -93,28 +93,9 @@ export default class Feed extends Component {
     }
 
     _deletePost (_id) {
-        const { posts } = this.state;
-        const { api } = this.context;
-
-        fetch(`${api}/${_id}`, {
-            method: 'DELETE'
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('Post was not deleted.');
-                }
-
-                this.setState({
-                    isPostsLoading: true
-                });
-            })
-            .then(() =>
-                this.setState({
-                    posts:          posts.filter((post) => post._id !== _id),
-                    isPostsLoading: false
-                })
-            )
-            .catch(({ message }) => console.log(message)); // eslint-disable-line
+        this.setState({
+            posts: this.state.posts.filter((post) => post._id !== _id)
+        });
     }
 
     render () {
