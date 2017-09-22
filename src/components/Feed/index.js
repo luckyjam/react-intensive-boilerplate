@@ -33,6 +33,7 @@ export default class Feed extends Component {
         this.handleCounterAppear = ::this._handleCounterAppear;
         this.handlePostmanAppear = ::this._handlePostmanAppear;
         this.handlePostmanDisappear = ::this._handlePostmanDisappear;
+        this.likePost = ::this._likePost;
     }
 
     state = {
@@ -135,6 +136,36 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message)); // eslint-disable-line
     }
 
+    _likePost (_id, firstName, lastName) {
+        fetch(`${this.context.api}/${_id}`, {
+            method:  'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName
+            })
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error('Post were not liked.');
+                }
+
+                this.setState({
+                    isPostsFetching: true
+                });
+
+                this.getPosts();
+            })
+            .then(() => {
+                this.setState({
+                    isPostsFetching: false
+                });
+            })
+            .catch(({ message }) => console.log(message)); // eslint-disable-line
+    }
+
     _handleComposerAppear () {
         TweenMax.fromTo(
             this.composer,
@@ -204,7 +235,7 @@ export default class Feed extends Component {
     render () {
         const { posts, isPostsFetching } = this.state;
         const postsList = posts.map(
-            ({ avatar, comment, created, firstName, lastName, _id }) => (
+            ({ avatar, comment, created, firstName, lastName, likes, _id }) => (
                 <CSSTransition
                     classNames = { {
                         enter:       Styles.postEnter,
@@ -223,6 +254,8 @@ export default class Feed extends Component {
                         firstName = { firstName }
                         key = { _id }
                         lastName = { lastName }
+                        likePost = { this.likePost }
+                        likes = { likes }
                     />
                 </CSSTransition>
             )
@@ -260,7 +293,7 @@ export default class Feed extends Component {
                     <div ref = { (postman) => this.postman = postman }>
                         <Postman />
                     </div>
-                </Transition>;
+                </Transition>
             </section>
         );
     }

@@ -7,7 +7,14 @@ import PropTypes from 'prop-types';
 import { getFullName } from '../../helpers';
 import moment from 'moment';
 
+// Components
+import Like from '../../components/Like';
+
 export default class Post extends Component {
+    static contextTypes = {
+        firstName: PropTypes.string.isRequired
+    };
+
     static propTypes = {
         _id:        PropTypes.string.isRequired,
         avatar:     PropTypes.string.isRequired,
@@ -15,7 +22,9 @@ export default class Post extends Component {
         created:    PropTypes.number.isRequired,
         deletePost: PropTypes.func.isRequired,
         firstName:  PropTypes.string.isRequired,
-        lastName:   PropTypes.string.isRequired
+        lastName:   PropTypes.string.isRequired,
+        likePost:   PropTypes.func.isRequired,
+        likes:      PropTypes.array.isRequired
     };
 
     constructor () {
@@ -25,7 +34,8 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps._id !== this.props._id;
+
+        return JSON.stringify(nextProps) !== JSON.stringify(this.props);
     }
 
     _deletePost () {
@@ -33,11 +43,24 @@ export default class Post extends Component {
     }
 
     render () {
-        const { avatar, comment, created, firstName, lastName } = this.props;
+        const {
+            avatar,
+            comment,
+            created,
+            firstName,
+            lastName,
+            likes,
+            likePost,
+            _id
+        } = this.props;
+
+        const { firstName: ownFirstName } = this.context;
 
         const isAbleToDelete = (
             <span className = { Styles.cross } onClick = { this.deletePost } />
         );
+
+        const liked = likes.some((like) => like.firstName === ownFirstName);
 
         return (
             <section className = { Styles.post }>
@@ -52,6 +75,12 @@ export default class Post extends Component {
                     {moment.unix(created).format('MMMM D h:mm:ss a')}
                 </a>
                 <p className = { Styles.comment }>{comment}</p>
+                <Like
+                    id = { _id }
+                    liked = { liked }
+                    likePost = { likePost }
+                    likes = { likes }
+                />
             </section>
         );
     }
