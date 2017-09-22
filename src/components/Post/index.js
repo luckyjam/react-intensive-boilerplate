@@ -21,6 +21,12 @@ export default class Post extends Component {
         increasePostsCount: PropTypes.func.isRequired
     };
 
+    constructor () {
+        super();
+
+        this.deletePost = ::this._deletePost;
+    }
+
     componentWillMount () {
         this.props.increasePostsCount();
     }
@@ -33,9 +39,15 @@ export default class Post extends Component {
         this.props.decreasePostsCount();
     }
 
+<<<<<<< HEAD
     deletePost = () => {
         this.props.deletePost(this.props._id);
     };
+=======
+    _deletePost () {
+        this.props.deletePost(this.props._id);
+    }
+>>>>>>> 55f32f8... fix delete post method
 
     render () {
         const { firstName, lastName, avatar } = this.context;
