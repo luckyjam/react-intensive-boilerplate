@@ -46,16 +46,11 @@ export default class Feed extends Component {
                     throw new Error('Posts were not loaded.');
                 }
 
-                this.setState({
-                    isPostsLoading: true
-                });
-
                 return result.json();
             })
             .then(({ data }) => {
                 this.setState({
-                    posts:          data,
-                    isPostsLoading: false
+                    posts: data
                 });
             })
             .catch(({ message }) => console.log(message)); // eslint-disable-line
@@ -103,15 +98,10 @@ export default class Feed extends Component {
                 if (response.status !== 200) {
                     throw new Error('Post was not deleted.');
                 }
-
-                this.setState({
-                    isPostsLoading: true
-                });
             })
             .then(() =>
                 this.setState({
-                    posts:          posts.filter((post) => post._id !== _id),
-                    isPostsLoading: false
+                    posts: posts.filter((post) => post._id !== _id)
                 })
             )
             .catch(({ message }) => console.log(message)); // eslint-disable-line
