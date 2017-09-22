@@ -32,7 +32,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.comment !== this.props.comment;
+        return nextProps._id !== this.props._id;
     }
 
     componentWillUnmount () {
