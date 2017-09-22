@@ -23,7 +23,7 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.message !== this.props.message;
+        return nextProps.comment !== this.props.comment;
     }
 
     render () {
