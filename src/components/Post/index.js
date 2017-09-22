@@ -14,8 +14,8 @@ export default class Post extends Component {
     };
 
     static propTypes = {
-        increasePostsCount: PropTypes.func.isRequired,
-        message:            PropTypes.string.isRequired
+        comment:            PropTypes.string.isRequired,
+        increasePostsCount: PropTypes.func.isRequired
     };
 
     componentWillMount () {
@@ -23,12 +23,12 @@ export default class Post extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return nextProps.message !== this.props.message;
+        return nextProps.comment !== this.props.comment;
     }
 
     render () {
         const { firstName, lastName, avatar } = this.context;
-        const { message } = this.props;
+        const { comment } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -40,9 +40,7 @@ export default class Post extends Component {
                 <a className = { Styles.time }>
                     {moment().format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.message }>
-                    {message}
-                </p>
+                <p className = { Styles.comment }>{comment}</p>
             </section>
         );
     }
