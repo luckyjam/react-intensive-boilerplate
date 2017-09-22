@@ -103,15 +103,10 @@ export default class Feed extends Component {
                 if (response.status !== 200) {
                     throw new Error('Post was not deleted.');
                 }
-
-                this.setState({
-                    isPostsLoading: true
-                });
             })
             .then(() =>
                 this.setState({
-                    posts:          posts.filter((post) => post._id !== _id),
-                    isPostsLoading: false
+                    posts: posts.filter((post) => post._id !== _id)
                 })
             )
             .catch(({ message }) => console.log(message)); // eslint-disable-line
