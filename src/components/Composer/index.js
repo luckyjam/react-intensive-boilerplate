@@ -5,11 +5,13 @@ import React, { Component } from 'react';
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
 import { getUniqueID } from '../../helpers';
+import moment from 'moment';
 
 export default class Composer extends Component {
     static contextTypes = {
         avatar:    PropTypes.string.isRequired,
-        firstName: PropTypes.string.isRequired
+        firstName: PropTypes.string.isRequired,
+        lastName:  PropTypes.string.isRequired
     };
 
     static propTypes = {
@@ -37,14 +39,19 @@ export default class Composer extends Component {
         event.preventDefault();
 
         const { textAreaValue } = this.state;
+        const { firstName, lastName, avatar } = this.context;
 
         if (!textAreaValue) {
             return;
         }
 
         this.props.createPost({
+            _id:     getUniqueID(15),
             comment: textAreaValue,
-            _id:     getUniqueID(15)
+            created: moment().unix(),
+            firstName,
+            lastName,
+            avatar
         });
 
         this.setState({
