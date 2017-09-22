@@ -24,8 +24,7 @@ export default class Feed extends Component {
     }
 
     state = {
-        posts:      [],
-        postsCount: 0
+        posts: []
     };
 
     _createPost (post) {
@@ -65,20 +64,9 @@ export default class Feed extends Component {
         });
     };
 
-    increasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount + 1
-        });
-    };
-
-    decreasePostsCount = () => {
-        this.setState({
-            postsCount: this.state.postsCount - 1
-        });
-    };
-
     render () {
-        const posts = this.state.posts.map(({ comment, _id }) => (
+        const { posts } = this.state;
+        const postsList = posts.map(({ comment, _id }) => (
             <CSSTransition
                 classNames = { {
                     enter:       Styles.postEnter,
@@ -89,9 +77,7 @@ export default class Feed extends Component {
                 <Post
                     _id = { _id }
                     comment = { comment }
-                    decreasePostsCount = { this.decreasePostsCount }
                     deletePost = { this.deletePost }
-                    increasePostsCount = { this.increasePostsCount }
                 />
             </CSSTransition>
         ));
@@ -99,8 +85,8 @@ export default class Feed extends Component {
         return (
             <section className = { Styles.feed }>
                 <Composer createPost = { this.createPost } />
-                <Counter count = { this.state.postsCount } />
-                <TransitionGroup>{posts}</TransitionGroup>
+                <Counter count = { postsList.length } />
+                <TransitionGroup>{postsList}</TransitionGroup>
             </section>
         );
     }
