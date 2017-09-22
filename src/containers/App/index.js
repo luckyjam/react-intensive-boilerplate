@@ -17,6 +17,7 @@ const options = {
 
 export default class App extends Component {
     static childContextTypes = {
+        api:       PropTypes.string.isRequired,
         avatar:    PropTypes.string.isRequired,
         firstName: PropTypes.string.isRequired,
         lastName:  PropTypes.string.isRequired
