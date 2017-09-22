@@ -34,19 +34,13 @@ export default class Feed extends Component {
     };
 
     render () {
-<<<<<<< HEAD
-        const posts = this.state.posts.map(({ message, id }) =>
-            (<Post
-                increasePostsCount = { this.increasePostsCount }
-                key = { id }
-                message = { message }
-            />)
-        );
-=======
         const posts = this.state.posts.map(({ comment, _id }) => (
-            <Post comment = { comment } key = { _id } />
+            <Post
+                comment = { comment }
+                increasePostsCount = { this.increasePostsCount }
+                key = { _id }
+            />
         ));
->>>>>>> 6ed5574... refactor composer
 
         return (
             <section className = { Styles.feed }>

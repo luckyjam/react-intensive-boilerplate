@@ -55,13 +55,6 @@ export default class Composer extends Component {
         });
     }
 
-<<<<<<< HEAD
-    _handleTextAreaMutation (event) {
-        this.setState({
-            textAreaValue: event.target.value
-        });
-    }
-
     _handleTextAreaCopy (event) {
         event.preventDefault();
         alert(
@@ -75,15 +68,14 @@ export default class Composer extends Component {
         });
     }
 
-=======
->>>>>>> 6ed5574... refactor composer
     render () {
         const { firstName, avatar } = this.context;
         const { textAreaValue } = this.state;
 
         return (
             <section className = { Styles.composer }>
-                {' '}<img alt = 'commenter' src = { avatar } />
+                {' '}
+                <img alt = 'commenter' src = { avatar } />
                 <form onSubmit = { this.handleSubmit }>
                     <textarea
                         placeholder = { `What's on your mind, ${firstName}?` }
