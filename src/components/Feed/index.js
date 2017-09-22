@@ -13,6 +13,7 @@ import Transition from 'react-transition-group/Transition';
 import Composer from '../../components/Composer';
 import Post from '../../components/Post';
 import Counter from '../../components/Counter';
+import Spinner from '../../components/Spinner';
 
 export default class Feed extends Component {
     static contextTypes = {
@@ -28,7 +29,8 @@ export default class Feed extends Component {
     }
 
     state = {
-        posts: []
+        posts:           [],
+        isPostsFetching: false
     };
 
     componentWillMount () {
@@ -50,11 +52,16 @@ export default class Feed extends Component {
                     throw new Error('Posts were not loaded.');
                 }
 
+                this.setState({
+                    isPostsFetching: true
+                });
+
                 return result.json();
             })
             .then(({ data }) => {
                 this.setState({
-                    posts: data
+                    posts:           data,
+                    isPostsFetching: false
                 });
             })
             .catch(({ message }) => console.log(message)); // eslint-disable-line
@@ -81,11 +88,16 @@ export default class Feed extends Component {
                     throw new Error('Post was not created!');
                 }
 
+                this.setState({
+                    isPostsFetching: true
+                });
+
                 return response.json();
             })
             .then(({ data }) =>
                 this.setState(({ posts }) => ({
-                    posts: [data, ...posts]
+                    posts:           [data, ...posts],
+                    isPostsFetching: false
                 }))
             )
             .catch(({ message }) => console.log(message)); // eslint-disable-line
@@ -102,10 +114,15 @@ export default class Feed extends Component {
                 if (response.status !== 200) {
                     throw new Error('Post was not deleted.');
                 }
+
+                this.setState({
+                    isPostsFetching: true
+                });
             })
             .then(() =>
                 this.setState({
-                    posts: posts.filter((post) => post._id !== _id)
+                    posts:           posts.filter((post) => post._id !== _id),
+                    isPostsFetching: false
                 })
             )
             .catch(({ message }) => console.log(message)); // eslint-disable-line
@@ -120,7 +137,7 @@ export default class Feed extends Component {
     };
 
     render () {
-        const { posts } = this.state;
+        const { posts, isPostsFetching } = this.state;
         const postsList = posts.map(({ comment, _id }) => (
             <CSSTransition
                 classNames = { {
@@ -139,8 +156,11 @@ export default class Feed extends Component {
             </CSSTransition>
         ));
 
+        const spinner = isPostsFetching ? <Spinner /> : null;
+
         return (
             <section className = { Styles.feed }>
+                {spinner}
                 <Transition
                     appear
                     in
