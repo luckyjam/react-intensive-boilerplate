@@ -31,6 +31,8 @@ export default class Feed extends Component {
         this.deletePost = ::this._deletePost;
         this.handleComposerAppear = ::this._handleComposerAppear;
         this.handleCounterAppear = ::this._handleCounterAppear;
+        this.handlePostmanAppear = ::this._handlePostmanAppear;
+        this.handlePostmanDisappear = ::this._handlePostmanDisappear;
     }
 
     state = {
@@ -163,21 +165,33 @@ export default class Feed extends Component {
         );
     }
 
-    handlePostmanAppear = () => {
-        new Promise((resolve) => {
-            TweenMax.fromTo(
-                this.postman,
-                1.5,
-                { opacity: 0 },
-                {
-                    opacity:    1,
-                    onComplete: () => setTimeout(() => resolve(), 4000)
-                }
-            );
-        }).then(() =>
-            TweenMax.fromTo(this.postman, 1.5, { opacity: 1 }, { opacity: 0 })
+    _handlePostmanAppear () {
+        TweenMax.fromTo(
+            this.postman,
+            2,
+            {
+                opacity: 0
+            },
+            {
+                opacity:    1,
+                onComplete: () =>
+                    setTimeout(() => this.handlePostmanDisappear(), 5000)
+            }
         );
-    };
+    }
+
+    _handlePostmanDisappear () {
+        TweenMax.fromTo(
+            this.postman,
+            2,
+            {
+                opacity: 1
+            },
+            {
+                opacity: 0
+            }
+        );
+    }
 
     handlePostEnter = () => {
         TweenMax.fromTo(this.post, 0.5, { opacity: 0 }, { opacity: 1 });
@@ -241,12 +255,12 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
-                    timeout = { 500 }
+                    timeout = { 4000 }
                     onEnter = { this.handlePostmanAppear }>
                     <div ref = { (postman) => this.postman = postman }>
                         <Postman />
                     </div>
-                </Transition>
+                </Transition>;
             </section>
         );
     }
