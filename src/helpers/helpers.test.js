@@ -1,6 +1,5 @@
 // Core
-import { getFullName, getCurrentTime, getUniqueID, getRandomColor } from './';
-import moment from 'moment';
+import { getFullName, getUniqueID, getRandomColor } from './';
 
 const firstName = 'Brad';
 const lastName = 'Pitt';
@@ -24,14 +23,6 @@ describe('helpers: ', () => {
         expect(getFullName(firstName, lastName)).toBe(
             `${firstName} ${lastName}`
         );
-    });
-
-    test('getCurrentTime function should be a function', () => {
-        expect(typeof getCurrentTime).toBe('function');
-    });
-
-    test('getCurrentTime function should return current date and time values properly formatted', () => {
-        expect(getCurrentTime()).toBe(moment().format('MMMM D h:mm:ss a'));
     });
 
     test('getUniqueID function should be a function', () => {

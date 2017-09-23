@@ -1,23 +1,12 @@
 // Core
 import React from 'react';
-import { shallow } from 'enzyme';
 import Counter from './';
+import dom from 'react-test-renderer';
 
-const count = 1;
-const message = `Posts count: ${count}`;
+const renderTree = dom.create(
+    <Counter count = { 3 } />
+).toJSON();
 
-const result = shallow(<Counter count = { count } />);
-
-describe('Counter component:', () => {
-    test('Should have 1 \'section\' element', () => {
-        expect(result.find('section').length).toBe(1);
-    });
-
-    test('Should have valid html output', () => {
-        expect(result.html()).toBe(`<section>${message}</section>`);
-    });
-
-    test('Should children should have valid text value', () => {
-        expect(result.text()).toBe(message);
-    });
+test('Counter component should correspond to its snapshot counterpart', () => {
+    expect(renderTree).toMatchSnapshot();
 });

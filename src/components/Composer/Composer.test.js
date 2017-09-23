@@ -2,25 +2,26 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Composer from './';
-import Feed from '../Feed';
-import avatar from '../../theme/assets/homer.png';
+import { options } from '../../containers/App';
 
-const result = mount(<Composer createPost = { new Feed().createPost } />, {
-    context: {
-        avatar,
-        firstName: 'Homer'
-    }
-});
-
-const message = 'Marry Christmas!';
+const { firstName, lastName, avatar } = options;
+const message = 'Merry christmas!';
 const state = {
-    color:         '#000',
-    textAreaValue: ''
+    textAreaValue:     '',
+    avatarBorderColor: '#90949C'
 };
 const mutatedState = {
-    color:         '#000',
-    textAreaValue: message
+    textAreaValue:     message,
+    avatarBorderColor: '#90949C'
 };
+
+const result = mount(<Composer createPost = { () => null } />, {
+    context: {
+        firstName,
+        lastName,
+        avatar
+    }
+});
 
 describe('Composer component:', () => {
     test('Should have 1 \'section\' element', () => {
@@ -39,8 +40,16 @@ describe('Composer component:', () => {
         expect(result.find('input').length).toBe(1);
     });
 
+    test('Should have 1 \'img\' element', () => {
+        expect(result.find('img').length).toBe(1);
+    });
+
     test('Should have valid initial state', () => {
         expect(result.state()).toEqual(state);
+    });
+
+    test('textarea value should empty initially', () => {
+        expect(result.find('textarea').text()).toBe('');
     });
 
     test('Should respond to state change properly', () => {
@@ -49,36 +58,27 @@ describe('Composer component:', () => {
         });
 
         expect(result.state()).toEqual(mutatedState);
+        expect(result.find('textarea').text()).toBe(message);
 
         result.setState({
             textAreaValue: ''
         });
-    });
 
-    test('textarea value should be empty initially', () => {
+        expect(result.state()).toEqual(state);
         expect(result.find('textarea').text()).toBe('');
     });
 
-    test('textarea value should chang if text input provided', () => {
-        result.find('textarea').simulate('change', {
-            target: {
-                value: message
-            }
+    test(`component state and textarea value should reflect according changes
+      if any text input provided`, () => {
+            result.find('textarea').simulate('change', {
+                target: {
+                    value: message
+                }
+            });
+
+            expect(result.find('textarea').text()).toBe(message);
+            expect(result.state()).toEqual(mutatedState);
         });
-
-        expect(result.find('textarea').text()).toBe(message);
-    });
-
-    test('component state and textarea value should reflect according changes if any text input provided', () => {
-        result.find('textarea').simulate('change', {
-            target: {
-                value: message
-            }
-        });
-
-        expect(result.state()).toEqual(mutatedState);
-        expect(result.find('textarea').text()).toBe(message);
-    });
 
     test('component state and textarea value should reflect according changes if the form is submitted', () => {
         result.find('form').simulate('submit');

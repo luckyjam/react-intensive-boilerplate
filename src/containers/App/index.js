@@ -8,7 +8,7 @@ import avatar from '../../theme/assets/homer.jpg';
 // Components
 import Feed from '../../components/Feed';
 
-const options = {
+export const options = {
     avatar,
     firstName: 'Homer',
     lastName:  'Simpson',
