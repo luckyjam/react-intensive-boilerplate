@@ -17,7 +17,8 @@ export default class Post extends Component {
     };
 
     shouldComponentUpdate (nextProps) {
-        return nextProps._id !== this.props._id;
+
+        return JSON.stringify(nextProps) !== JSON.stringify(this.props);
     }
 
     render () {
