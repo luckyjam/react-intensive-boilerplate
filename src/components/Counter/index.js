@@ -1,22 +1,16 @@
 // Core
-import React, { Component } from 'react';
+import React from 'react';
 
 // Instruments
 import Styles from './styles.scss';
 import PropTypes from 'prop-types';
 
-export default class Counter extends Component {
-    static propTypes = {
-        count: PropTypes.number.isRequired
-    }
+const Counter = ({ count }) => (
+    <section className = { Styles.counter }>Posts count: {count}</section>
+);
 
-    render () {
-        const { count } = this.props;
+Counter.propTypes = {
+    count: PropTypes.number.isRequired
+};
 
-        return (
-            <section className = { Styles.counter }>
-                Posts count: {count}
-            </section>
-        );
-    }
-}
+export default Counter;
