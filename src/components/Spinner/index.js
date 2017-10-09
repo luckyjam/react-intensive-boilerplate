@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
 
 // Instruments
 import Styles from './styles.scss';
@@ -8,6 +9,7 @@ export default class Spinner extends Component {
     constructor () {
         super();
         this.spin = ::this._spin;
+        this.portalTarget = document.getElementById('portal');
     }
 
     state = {
@@ -41,6 +43,9 @@ export default class Spinner extends Component {
     render () {
         const { loading } = this.state;
 
-        return <section className = { Styles.spinner }>{loading}</section>;
+        return createPortal(
+            <section className = { Styles.spinner }>{loading}</section>,
+            this.portalTarget
+        );
     }
 }
