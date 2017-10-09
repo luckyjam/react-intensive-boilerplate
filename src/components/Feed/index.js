@@ -8,7 +8,11 @@ import Styles from './styles.scss';
 // Components
 import Composer from '../../components/Composer';
 import Post from '../../components/Post';
+<<<<<<< HEAD
 import Counter from '../../components/Counter';
+=======
+import Catcher from '../../components/Catcher';
+>>>>>>> e8b9cd6... add error boundary
 
 export default class Feed extends Component {
     static contextTypes = {
@@ -58,7 +62,9 @@ export default class Feed extends Component {
 
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
-            <Post _id = { _id } comment = { comment } key = { _id } />
+            <Catcher key = { _id }>
+                <Post _id = { _id } comment = { comment } />
+            </Catcher>
         ));
 
         return (
