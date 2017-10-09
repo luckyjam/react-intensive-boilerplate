@@ -1,8 +1,12 @@
 // Core
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { mount } from 'enzyme';
 import Composer from './';
 import { options } from '../../containers/App';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const { firstName, lastName, avatar } = options;
 const message = 'Merry christmas!';
