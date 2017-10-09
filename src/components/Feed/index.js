@@ -8,6 +8,7 @@ import Styles from './styles.scss';
 // Components
 import Composer from '../../components/Composer';
 import Post from '../../components/Post';
+import Catcher from '../../components/Catcher';
 
 export default class Feed extends Component {
     static contextTypes = {
@@ -57,7 +58,9 @@ export default class Feed extends Component {
 
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
-            <Post comment = { comment } key = { _id } />
+            <Catcher key = { _id }>
+                <Post comment = { comment } />
+            </Catcher>
         ));
 
         return (
