@@ -16,6 +16,7 @@ import Composer from '../../components/Composer';
 import Post from '../../components/Post';
 import Counter from '../../components/Counter';
 import Spinner from '../../components/Spinner';
+import Catcher from '../../components/Catcher';
 
 export default class Feed extends Component {
     static contextTypes = {
@@ -175,16 +176,17 @@ export default class Feed extends Component {
                     } }
                     key = { _id }
                     timeout = { { enter: 300, exit: 500 } }>
-                    <Post
-                        _id = { _id }
-                        avatar = { avatar }
-                        comment = { comment }
-                        created = { created }
-                        deletePost = { this.deletePost }
-                        firstName = { firstName }
-                        key = { _id }
-                        lastName = { lastName }
-                    />
+                    <Catcher>
+                        <Post
+                            _id = { _id }
+                            avatar = { avatar }
+                            comment = { comment }
+                            created = { created }
+                            deletePost = { this.deletePost }
+                            firstName = { firstName }
+                            lastName = { lastName }
+                        />
+                    </Catcher>
                 </CSSTransition>
             )
         );
