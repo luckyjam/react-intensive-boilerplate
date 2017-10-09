@@ -8,6 +8,7 @@ import Styles from './styles.scss';
 // Components
 import Composer from '../../components/Composer';
 import Post from '../../components/Post';
+import Catcher from '../../components/Catcher';
 import Counter from '../../components/Counter';
 
 export default class Feed extends Component {
@@ -66,12 +67,13 @@ export default class Feed extends Component {
 
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
+            <Catcher key = { _id }>
             <Post
                 _id = { _id }
                 comment = { comment }
                 increasePostsCount = { this.increasePostsCount }
-                key = { _id }
             />
+            </Catcher>
         ));
 
         return (
