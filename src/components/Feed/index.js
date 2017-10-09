@@ -68,11 +68,11 @@ export default class Feed extends Component {
     render () {
         const posts = this.state.posts.map(({ comment, _id }) => (
             <Catcher key = { _id }>
-            <Post
-                _id = { _id }
-                comment = { comment }
-                increasePostsCount = { this.increasePostsCount }
-            />
+                <Post
+                    _id = { _id }
+                    comment = { comment }
+                    increasePostsCount = { this.increasePostsCount }
+                />
             </Catcher>
         ));
 
