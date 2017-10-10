@@ -8,11 +8,12 @@ import avatar from '../../theme/assets/homer.jpg';
 // Components
 import Feed from '../../components/Feed';
 
+const groupID = 'l6l13w34sq';
 const options = {
     avatar,
     firstName: 'Homer',
     lastName:  'Simpson',
-    api:       'http://localhost:3030/feed'
+    api:       `https://lab.lectrum.io/feed/${groupID}`
 };
 
 export default class App extends Component {
