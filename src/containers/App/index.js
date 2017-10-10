@@ -9,7 +9,8 @@ import avatar from '../../theme/assets/homer.jpg';
 import Feed from '../../components/Feed';
 
 const groupID = 'Group ID goes here.';
-const options = {
+
+export const options = {
     avatar,
     firstName: 'Homer',
     lastName:  'Simpson',
