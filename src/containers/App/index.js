@@ -8,7 +8,7 @@ import avatar from '../../theme/assets/homer.jpg';
 // Components
 import Feed from '../../components/Feed';
 
-const groupID = 'l6l13w34sq';
+const groupID = 'Group ID goes here.';
 const options = {
     avatar,
     firstName: 'Homer',
