@@ -2,21 +2,30 @@
 import React, { Component } from 'react';
 
 // Instruments
-import Styles from './styles.scss';
-import avatar from '../../theme/assets/homer.jpg';
+import PropTypes from 'prop-types';
 
 // Components
-import Composer from '../../components/Composer';
-import Post from '../../components/Post';
+import Feed from '../../components/Feed';
+
+const options = {
+    firstName: 'Dima',
+    lastName: 'Vakatsiienko'
+}
 
 export default class App extends Component {
+    static childContextTypes = {
+        firstName: PropTypes.string.isRequired
+    }
+
+    getChildContext () {
+        return {
+            firstName: options.firstName
+        }
+    }
     render () {
 
-        return (
-            <section className = { Styles.app } >
-                <Composer />
-                <Post />
-            </section>
-        );
+        return <Feed
+            lastName = { options.lastName }
+        />;
     }
 }
