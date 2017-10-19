@@ -3,19 +3,18 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
-import moment from 'moment';
+import avatar from '../../theme/assets/homer.jpg';
 
 export default class App extends Component {
-
-    timer = setInterval(() => this.forceUpdate(), 1000);
-
     render () {
+
         return (
-            <section className = { Styles.app }>
-                <h1>Welcome!</h1>
-                <p>
-                    It is {moment().format('MMMM D h:mm:ss a')}.
-                </p>
+            <section className = { Styles.app } >
+                <img alt = 'commenter' src = { avatar } />
+                <form>
+                    <textarea placeholder = 'Dima Vakatsiienko' />
+                    <input type = 'submit' value = 'Post' />
+                </form>
             </section>
         );
     }
