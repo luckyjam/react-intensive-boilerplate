@@ -5,16 +5,17 @@ import React, { Component } from 'react';
 import Styles from './styles.scss';
 import avatar from '../../theme/assets/homer.jpg';
 
+// Components
+import Composer from '../../components/Composer';
+import Post from '../../components/Post';
+
 export default class App extends Component {
     render () {
 
         return (
             <section className = { Styles.app } >
-                <img alt = 'commenter' src = { avatar } />
-                <form>
-                    <textarea placeholder = 'Dima Vakatsiienko' />
-                    <input type = 'submit' value = 'Post' />
-                </form>
+                <Composer />
+                <Post />
             </section>
         );
     }
