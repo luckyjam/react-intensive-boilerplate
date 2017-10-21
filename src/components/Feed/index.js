@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import { string } from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // Components
 import Composer from '../Composer';
@@ -24,6 +25,7 @@ export default class Feed extends Component {
 
         this.createPost = ::this._createPost;
         this.getPosts = ::this._getPosts;
+        this.deletePost = ::this._deletePost;
     }
 
     state = {
@@ -89,25 +91,49 @@ export default class Feed extends Component {
             .catch(({ message }) => console.log(message));
     }
 
+    async _deletePost (_id) {
+        try {
+            const { api } = this.context;
+
+            const response = await fetch(`${api}/${_id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Post were not deleted!');
+            }
+
+            this.setState(({ posts }) => ({
+                posts: posts.filter((post) => post._id !== _id)
+            }));
+        } catch ({ message }) {
+            console.log(message);
+        }
+    }
+
     render () {
         const { posts } = this.state;
-        const postsList = posts.map(({
-            _id,
-            comment,
-            created,
-            firstName,
-            lastName,
-            avatar
-        }) => (
-            <Post
-                avatar = { avatar }
-                comment = { comment }
-                created = { created }
-                firstName = { firstName }
-                key = { _id }
-                lastName = { lastName }
-            />
-        ));
+        const postsList = posts.map(
+            ({ _id, comment, created, firstName, lastName, avatar }) => (
+                <CSSTransition
+                    classNames = { {
+                        enter:       Styles.postEnter,
+                        enterActive: Styles.postEnterActive
+                    } }
+                    key = { _id }
+                    timeout = { { enter: 300, exit: 0 } }>
+                    <Post
+                        _id = { _id }
+                        avatar = { avatar }
+                        comment = { comment }
+                        created = { created }
+                        deletePost = { this.deletePost }
+                        firstName = { firstName }
+                        lastName = { lastName }
+                    />
+                </CSSTransition>
+            )
+        );
 
         return (
             <section className = { Styles.feed }>
@@ -115,7 +141,9 @@ export default class Feed extends Component {
                     <Composer createPost = { this.createPost } />
                 </Catcher>
                 <Counter count = { posts.length } />
-                {postsList}
+                <TransitionGroup>
+                    {postsList}
+                </TransitionGroup>
             </section>
         );
     }

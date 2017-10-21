@@ -7,4 +7,13 @@
     min-width: 100vw;
     min-height: 100vh;
     background-color: $paletteColor3;
+
+    .postEnter {
+        opacity: 0.01;
+    }
+
+    .postEnterActive {
+        transition: opacity 300ms ease-in;
+        opacity: 1;
+    }
 }

@@ -18,10 +18,6 @@ const options = {
     api:       `https://lab.lectrum.io/feed/${groupID}`
 };
 
-// DELETE POST:
-// api:       `https://lab.lectrum.io/feed/${groupID}/${_id}`
-
-// method: 'DELETE'
 
 export default class App extends Component {
     static childContextTypes = {
