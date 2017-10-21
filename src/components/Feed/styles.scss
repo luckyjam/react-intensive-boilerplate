@@ -13,7 +13,25 @@
     }
 
     .postEnterActive {
-        transition: opacity 300ms ease-in;
+        transition: opacity 1000ms ease-in;
         opacity: 1;
+    }
+
+    .postAppear {
+        opacity: 0.01;
+    }
+
+    .postAppearActive {
+        transition: opacity 1000ms ease-in;
+        opacity: 1;
+    }
+
+    .postDelete {
+        opacity: 1;
+    }
+
+    .postDeleteActive {
+        transition: opacity 1000ms ease-in;
+        opacity: 0.01;
     }
 }

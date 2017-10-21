@@ -10,6 +10,7 @@ import moment from 'moment';
 export default class Composer extends Component {
     static contextTypes = {
         firstName: PropTypes.string.isRequired,
+        lastName:  PropTypes.string.isRequired,
         avatar:    PropTypes.string.isRequired
     };
 
@@ -41,6 +42,7 @@ export default class Composer extends Component {
         event.preventDefault();
 
         const { textAreaValue } = this.state;
+        const { firstName, lastName, avatar } = this.context;
 
         if (!textAreaValue) {
             return;
@@ -49,7 +51,10 @@ export default class Composer extends Component {
         this.props.createPost({
             _id:     getUniqueID(15),
             comment: textAreaValue,
-            created: moment().unix()
+            created: moment().unix(),
+            firstName,
+            lastName,
+            avatar
         });
 
         this.setState(() => ({
@@ -72,7 +77,6 @@ export default class Composer extends Component {
     render () {
         const { firstName, avatar } = this.context;
         const { textAreaValue, avatarBorderColor } = this.state;
-
 
         return (
             <section className = { Styles.composer }>
