@@ -2,23 +2,31 @@
 import React, { Component } from 'react';
 
 // Instruments
-import avatar from '../../theme/assets/avatar.jpg';
 import Styles from './styles.scss';
 import moment from 'moment';
-import PropTypes from 'prop-types';
+import { string, number } from 'prop-types';
 
 export default class Post extends Component {
-    static contextTypes = {
-        firstName: PropTypes.string.isRequired
+    static propTypes = {
+        avatar:    string.isRequired,
+        comment:   string.isRequired,
+        created:   number.isRequired,
+        firstName: string.isRequired,
+        lastName:  string.isRequired
     };
 
-    static propTypes = {
-        lastName:  PropTypes.string.isRequired
+    static defaultProps = {
+        avatar:    '',
+        firstName: 'noname',
+        lastName:  'noname'
     };
+
+    shouldComponentUpdate (nextProps) {
+        return JSON.stringify(nextProps) !== JSON.stringify(this.props);
+    }
 
     render () {
-        const { firstName } = this.context;
-        const { lastName } = this.props;
+        const { firstName, lastName, avatar, comment, created } = this.props;
 
         return (
             <section className = { Styles.post }>
@@ -26,15 +34,11 @@ export default class Post extends Component {
                 <a>
                     <img alt = 'commenter' src = { avatar } />
                 </a>
-                <a className = { Styles.name }>
-                    {`${firstName} ${lastName}`}
-                </a>
+                <a className = { Styles.name }>{`${firstName} ${lastName}`}</a>
                 <a className = { Styles.time }>
-                    {moment().format('MMMM D h:mm:ss a')}
+                    {moment.unix(created).format('MMMM D h:mm:ss a')}
                 </a>
-                <p className = { Styles.message }>
-                    Comment!
-                </p>
+                <p className = { Styles.message }>{comment}</p>
             </section>
         );
     }

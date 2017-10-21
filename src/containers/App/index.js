@@ -2,30 +2,40 @@
 import React, { Component } from 'react';
 
 // Instruments
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
+import avatar from '../../theme/assets/avatar.jpg';
 
 // Components
 import Feed from '../../components/Feed';
+import Catcher from '../../components/Catcher';
+
+const groupID = 'l1lz1az2m5';
 
 const options = {
     firstName: 'Dima',
-    lastName: 'Vakatsiienko'
-}
+    lastName:  'Vakatsiienko',
+    avatar,
+    api:       `https://lab.lectrum.io/feed/${groupID}`
+};
+
+// DELETE POST:
+// api:       `https://lab.lectrum.io/feed/${groupID}/${_id}`
+
+// method: 'DELETE'
 
 export default class App extends Component {
     static childContextTypes = {
-        firstName: PropTypes.string.isRequired
-    }
+        firstName: string.isRequired,
+        lastName:  string.isRequired,
+        avatar:    string.isRequired,
+        api:       string.isRequired
+    };
 
     getChildContext () {
-        return {
-            firstName: options.firstName
-        }
+        return options;
     }
-    render () {
 
-        return <Feed
-            lastName = { options.lastName }
-        />;
+    render () {
+        return <Catcher><Feed /></Catcher>;
     }
 }
