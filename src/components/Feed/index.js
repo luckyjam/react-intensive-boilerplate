@@ -4,15 +4,19 @@ import React, { Component } from 'react';
 // Instruments
 import Styles from './styles.scss';
 import { string } from 'prop-types';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import {
+    CSSTransition,
+    Transition,
+    TransitionGroup
+} from 'react-transition-group';
+import { fromTo } from 'gsap';
 
 // Components
 import Composer from '../Composer';
 import Post from '../Post';
 import Counter from '../Counter';
-import Catcher from '../Catcher';
 import Postman from '../Postman';
-import avatar from '../../theme/assets/avatar.jpg';
+import Spinner from '../Spinner';
 
 export default class Feed extends Component {
     static contextTypes = {
@@ -28,83 +32,84 @@ export default class Feed extends Component {
         this.createPost = ::this._createPost;
         this.getPosts = ::this._getPosts;
         this.deletePost = ::this._deletePost;
+        this.handleComposerAppear = ::this._handleComposerAppear;
+        this.handleCounterAppear = ::this._handleCounterAppear;
+        this.handlePostmanAppear = ::this._handlePostmanAppear;
+        this.handlePostmanDisappear = ::this._handlePostmanDisappear;
+        this.startPostsFetching = ::this._startPostsFetching;
+        this.stopPostsFetching = ::this._stopPostsFetching;
+        this.likePost = ::this._likePost;
     }
 
     state = {
-        posts: [
-            {
-                _id:       '123',
-                created:   1508588409160,
-                firstName: 'Dima',
-                lastName:  'Vakatsiienko',
-                avatar,
-                comment:   'hello'
-            },
-            {
-                _id:       '345',
-                created:   1508588409160,
-                firstName: 'Dima',
-                lastName:  'Vakatsiienko',
-                avatar,
-                comment:   'hello'
-            },
-            {
-                _id:       '678',
-                created:   1508588409160,
-                firstName: 'Dima',
-                lastName:  'Vakatsiienko',
-                avatar,
-                comment:   'hello'
-            }
-        ]
+        posts:         [],
+        postsFetching: false
     };
 
-    // componentWillMount () {
-    //     this.getPosts();
-    //
-    //     this.refetchPosts = setInterval(() => this.getPosts(), 5000);
-    // }
-    //
-    // componentWillUnmount () {
-    //     clearInterval(this.refetchPosts);
-    // }
+    componentWillMount () {
+        this.getPosts();
+
+        this.refetchPosts = setInterval(() => this.getPosts(), 5000);
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.refetchPosts);
+    }
+
+    _startPostsFetching () {
+        this.setState(() => ({
+            postsFetching: true
+        }));
+    }
+
+    _stopPostsFetching () {
+        this.setState(() => ({
+            postsFetching: true
+        }));
+    }
 
     _createPost (post) {
         const { api, firstName, lastName, avatar } = this.context;
 
-        // fetch(api, {
-        //     method:  'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json; charset=utf-8'
-        //     },
-        //     body: JSON.stringify({
-        //         firstName,
-        //         lastName,
-        //         avatar,
-        //         comment: post.comment
-        //     })
-        // })
-        //     .then((response) => {
-        //         if (response.status !== 200) {
-        //             throw new Error('Post was not created!');
-        //         }
-        //
-        //         return response.json();
-        //     })
-        //     .then(({ data }) =>
+        this.startPostsFetching();
+
+        fetch(api, {
+            method:  'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                avatar,
+                comment: post.comment
+            })
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    this.stopPostsFetching();
+                    throw new Error('Post was not created!');
+                }
+
+                return response.json();
+            })
+            .then(({ data }) =>
                 this.setState(({ posts }) => ({
-                    posts: [post, ...posts]
+                    posts:         [data, ...posts],
+                    postsFetching: false
                 }))
-            // )
-            // .catch(({ message }) => console.log(message));
+            )
+            .catch(({ message }) => console.log(message));
     }
 
     _getPosts () {
+        this.startPostsFetching();
         fetch(this.context.api, {
             method: 'GET'
         })
             .then((result) => {
                 if (result.status !== 200) {
+                    this.stopPostsFetching();
                     throw new Error('Posts were not loaded.');
                 }
 
@@ -112,36 +117,95 @@ export default class Feed extends Component {
             })
             .then(({ data }) =>
                 this.setState(() => ({
-                    posts: data
+                    posts:         data,
+                    postsFetching: false
                 }))
             )
             .catch(({ message }) => console.log(message));
     }
 
     async _deletePost (_id) {
-        // try {
-        //     const { api } = this.context;
-        //
-        //     const response = await fetch(`${api}/${_id}`, {
-        //         method: 'DELETE'
-        //     });
-        //
-        //     if (response.status !== 200) {
-        //         throw new Error('Post were not deleted!');
-        //     }
-        //
+        try {
+            const { api } = this.context;
+
+            this.startPostsFetching();
+
+            const response = await fetch(`${api}/${_id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.status !== 200) {
+                this.stopPostsFetching();
+                throw new Error('Post were not deleted!');
+            }
+
             this.setState(({ posts }) => ({
-                posts: posts.filter((post) => post._id !== _id)
+                posts:         posts.filter((post) => post._id !== _id),
+                postsFetching: false
             }));
-        // } catch ({ message }) {
-        //     console.log(message);
-        // }
+        } catch ({ message }) {
+            console.log(message);
+        }
+    }
+
+    _likePost (_id, firstName, lastName) {
+        fetch(`${this.context.api}/${_id}`, {
+            method:  'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName
+            })
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error('Post were not liked.');
+                }
+
+                this.setState({
+                    isPostsFetching: true
+                });
+
+                this.getPosts();
+            })
+            .then(() => {
+                this.setState({
+                    isPostsFetching: false
+                });
+            })
+            .catch(({ message }) => console.log(message));
+    }
+
+    _handleComposerAppear (composer) {
+        fromTo(composer, 1, { y: -200, opacity: 0 }, { y: 0, opacity: 1 });
+    }
+
+    _handleCounterAppear (counter) {
+        fromTo(counter, 1, { x: -300, opacity: 0 }, { x: 0, opacity: 1 });
+    }
+
+    _handlePostmanAppear (postman) {
+        fromTo(
+            postman,
+            2,
+            { x: 300, opacity: 0 },
+            {
+                x:       0,
+                opacity: 1
+            }
+        );
+    }
+
+    _handlePostmanDisappear (postman) {
+        fromTo(postman, 2, { x: 0, opacity: 1 }, { x: 300, opacity: 0 });
     }
 
     render () {
-        const { posts } = this.state;
+        const { posts, postsFetching } = this.state;
         const postsList = posts.map(
-            ({ _id, comment, created, firstName, lastName, avatar }) => (
+            ({ _id, comment, created, firstName, lastName, avatar, likes }) => (
                 <CSSTransition
                     appear
                     classNames = { {
@@ -162,19 +226,41 @@ export default class Feed extends Component {
                         deletePost = { this.deletePost }
                         firstName = { firstName }
                         lastName = { lastName }
+                        likePost = { this.likePost }
+                        likes = { likes }
                     />
                 </CSSTransition>
             )
         );
 
+        const spinner = postsFetching ? <Spinner /> : null;
+
         return (
             <section className = { Styles.feed }>
-                <Catcher>
+                {spinner}
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 }
+                    onEnter = { this.handleComposerAppear }>
                     <Composer createPost = { this.createPost } />
-                </Catcher>
-                <Counter count = { posts.length } />
+                </Transition>
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 }
+                    onEnter = { this.handleCounterAppear }>
+                    <Counter count = { posts.length } />
+                </Transition>
                 <TransitionGroup>{postsList}</TransitionGroup>
-                <Postman />
+                <Transition
+                    appear
+                    in
+                    timeout = { 10000 }
+                    onEnter = { this.handlePostmanAppear }
+                    onEntered = { this.handlePostmanDisappear }>
+                    <Postman />
+                </Transition>
             </section>
         );
     }
