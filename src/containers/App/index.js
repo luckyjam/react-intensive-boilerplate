@@ -10,7 +10,7 @@ import Catcher from '../../components/Catcher';
 
 const groupID = 'l1lz1az2m5';
 
-const options = {
+export const options = {
     firstName: 'Dima',
     lastName:  'Vakatsiienko',
     avatar:

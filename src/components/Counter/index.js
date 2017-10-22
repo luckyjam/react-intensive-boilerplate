@@ -12,8 +12,4 @@ Counter.propTypes = {
     count: number.isRequired
 };
 
-Counter.defaultProps = {
-    count: 0
-};
-
 export default Counter;
