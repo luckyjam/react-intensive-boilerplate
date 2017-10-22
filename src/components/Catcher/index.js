@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // Instruments
 import { object } from 'prop-types';
-import Styles from './styles';
+import Styles from './styles.scss';
 
 export default class Catcher extends Component {
     static propTypes = {

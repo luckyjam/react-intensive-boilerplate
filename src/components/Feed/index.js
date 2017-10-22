@@ -68,60 +68,62 @@ export default class Feed extends Component {
         }));
     }
 
-    _createPost (post) {
-        const { api, firstName, lastName, avatar } = this.context;
+    async _createPost (post) {
+        try {
+            const { api, firstName, lastName, avatar } = this.context;
 
-        this.startPostsFetching();
+            this.startPostsFetching();
 
-        fetch(api, {
-            method:  'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                avatar,
-                comment: post.comment
-            })
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    this.stopPostsFetching();
-                    throw new Error('Post was not created!');
-                }
+            const response = await fetch(api, {
+                method:  'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    avatar,
+                    comment: post.comment
+                })
+            });
 
-                return response.json();
-            })
-            .then(({ data }) =>
-                this.setState(({ posts }) => ({
-                    posts:         [data, ...posts],
-                    postsFetching: false
-                }))
-            )
-            .catch(({ message }) => console.log(message));
+            if (response.status !== 200) {
+                this.stopPostsFetching();
+                throw new Error('Post was not created!');
+            }
+
+            const { data } = await response.json();
+
+            this.setState(({ posts }) => ({
+                posts:         [data, ...posts],
+                postsFetching: false
+            }));
+        } catch ({ message }) {
+            console.log(message);
+        }
     }
 
-    _getPosts () {
-        this.startPostsFetching();
-        fetch(this.context.api, {
-            method: 'GET'
-        })
-            .then((result) => {
-                if (result.status !== 200) {
-                    this.stopPostsFetching();
-                    throw new Error('Posts were not loaded.');
-                }
+    async _getPosts () {
+        try {
+            this.startPostsFetching();
+            const response = await fetch(this.context.api, {
+                method: 'GET'
+            });
 
-                return result.json();
-            })
-            .then(({ data }) =>
-                this.setState(() => ({
-                    posts:         data,
-                    postsFetching: false
-                }))
-            )
-            .catch(({ message }) => console.log(message));
+            if (response.status !== 200) {
+                this.stopPostsFetching();
+                throw new Error('Posts were not loaded.');
+            }
+
+            const { data } = await response.json();
+
+            this.setState(() => ({
+                posts:         data,
+                postsFetching: false
+            }));
+        } catch ({ message }) {
+            console.log(message);
+        }
     }
 
     async _deletePost (_id) {
@@ -148,34 +150,29 @@ export default class Feed extends Component {
         }
     }
 
-    _likePost (_id, firstName, lastName) {
-        fetch(`${this.context.api}/${_id}`, {
-            method:  'PUT',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify({
-                firstName,
-                lastName
-            })
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('Post were not liked.');
-                }
+    async _likePost (_id, firstName, lastName) {
+        try {
+            this.startPostsFetching();
+            const response = await fetch(`${this.context.api}/${_id}`, {
+                method:  'PUT',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName
+                })
+            });
 
-                this.setState({
-                    isPostsFetching: true
-                });
+            if (response.status !== 200) {
+                this.stopPostsFetching();
+                throw new Error('Post were not liked.');
+            }
 
-                this.getPosts();
-            })
-            .then(() => {
-                this.setState({
-                    isPostsFetching: false
-                });
-            })
-            .catch(({ message }) => console.log(message));
+            this.stopPostsFetching();
+        } catch ({ message }) {
+            console.log(message);
+        }
     }
 
     _handleComposerAppear (composer) {
