@@ -3,20 +3,39 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles.scss';
-import moment from 'moment';
+import { string } from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+// Components
+import List from '../../components/List';
+import MovieInfo from '../../components/MovieInfo';
+
+const apiKey = 'f95b4780d100c9d941e03e79486e1503';
+
+export const options = {
+    apiUrl: `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`,
+    apiKey
+};
 export default class App extends Component {
 
-    timer = setInterval(() => this.forceUpdate(), 1000);
+    static childContextTypes = {
+        apiUrl: string.isRequired,
+        apiKey: string.isRequired
+    }
+
+    getChildContext () {
+        return options;
+    }
+
 
     render () {
         return (
-            <section className = { Styles.app }>
-                <h1>Welcome!</h1>
-                <p>
-                    It is {moment().format('MMMM D h:mm:ss a')}.
-                </p>
-            </section>
+            <BrowserRouter>
+                <section>
+                    <Route exact component = { List } path = '/' />
+                    <Route component = { MovieInfo } path = '/:movieId' />
+                </section>
+            </BrowserRouter>
         );
     }
 }
