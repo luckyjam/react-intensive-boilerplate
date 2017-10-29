@@ -10,6 +10,7 @@ import moment from 'moment';
 
 // Components
 import Movie from '../Movie';
+import Favorites from '../Favorites';
 // import MovieInfo from '../MovieInfo';
 
 export default class List extends Component {
@@ -22,14 +23,28 @@ export default class List extends Component {
         this.getMovies = ::this._getMovies;
         this.handleClickFilterNew = ::this._handleClickFilterNew;
         this.handleClickFilterPopular = ::this._handleClickFilterPopular;
+        this.addToFavorites = ::this._addToFavorites;
 
     }
 
-    state = { popularMovies: []};
+    state = { movies: [], favorites: [] };
 
     componentWillMount () {
-        this.getMovies('popularity.desc');
+        const favoritesLocalStorage = JSON.parse(localStorage.getItem('favorites'));
 
+        this.getMovies('popularity.desc');
+        console.log(favoritesLocalStorage);
+        if (favoritesLocalStorage) {
+            this.setState(() => ({ favorites: favoritesLocalStorage }));
+        }
+
+
+    }
+
+    componentWillUpdate (nextProps, nextState) {
+        const { favorites } = nextState;
+
+        localStorage.setItem('favorites', JSON.stringify(favorites));
     }
 
     _handleClickFilterNew () {
@@ -42,6 +57,12 @@ export default class List extends Component {
 
         this.getMovies('popularity.desc');
 
+    }
+
+    _addToFavorites (favoriteMovie) {
+        //const favoritesList = {...this.state.favorites, movieId };
+
+        this.setState(({ favorites }) => ({ favorites: [favoriteMovie, ...favorites]}));
     }
 
     _getMovies (filter) {
@@ -63,15 +84,18 @@ export default class List extends Component {
 
                 return result.json();
             })
-            .then(({ results }) => this.setState(() => ({ popularMovies: results })))
+            .then(({ results }) => this.setState(() => ({ movies: results })))
             .catch(({ message }) => console.log(message));
     }
 
     render () {
-        const { popularMovies } = this.state;
-        const popularMoviesList = popularMovies.map(({ title, poster_path: posterPath, id }) => (
+        const { movies } = this.state;
+        const { favorites } = this.state;
+       
+        const moviesList = movies.map(({ title, poster_path: posterPath, id }) => (
 
             <Movie
+                addToFavorites = { this.addToFavorites }
                 key = { id }
                 movieId = { id }
                 poster = { posterPath }
@@ -87,7 +111,12 @@ export default class List extends Component {
                     <button onClick = { this.handleClickFilterPopular } >Popular Movies</button>
                     <button onClick = { this.handleClickFilterNew }>New Movies</button>
                 </div>
-                { popularMoviesList }
+                { moviesList }
+                <div>
+                    <Favorites
+                        favoriteMovies = { favorites }
+                    />
+                </div>
             </section>
         );
     }

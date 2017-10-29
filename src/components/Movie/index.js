@@ -2,17 +2,31 @@
 import React, { Component } from 'react';
 
 // Instruments
-import { string } from 'prop-types';
-import { Link, Route } from 'react-router-dom';
+import { string, func, number } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Components
-import MovieInfo from '../MovieInfo';
 
 export default class Movie extends Component {
 
     static propTypes = {
-        poster: string.isRequired,
-        title:  string.isRequired
+        addToFavorites: func.isRequired,
+        movieId:        number.isRequired,
+        poster:         string.isRequired,
+        title:          string.isRequired
+    }
+
+    constructor () {
+        super();
+        this.handleAddToFavorites = ::this._handleAddToFavorites;
+    }
+
+    _handleAddToFavorites () {
+        const { addToFavorites, movieId, title, poster } = this.props;
+        const favoriteMovie = { movieId, title, poster };
+
+        addToFavorites(favoriteMovie);
+
     }
 
 
@@ -27,7 +41,7 @@ export default class Movie extends Component {
                 </h3>
 
                 <img alt = 'movie poster' src = { `https://image.tmdb.org/t/p/w150${poster}` } />
-                <button>add to fav</button>
+                <button onClick = { this.handleAddToFavorites }>add to fav</button>
             </section>
         );
     }
