@@ -59,22 +59,25 @@ export default class MovieInfo extends Component {
                 return response.json();
 
             })
-            .then(({backdrop_path: backdrop, budget, credits, genres, homepage, images, title, tagline, videos, vote_average: voteScore }) => {
+            .then(({ backdrop_path: backdrop, budget, credits, genres, homepage, images, title, tagline, videos, vote_average: voteScore }) => {
                 this.setState(() => ({ backdrop, budget, credits, genres, homepage, images, title, tagline, videos, voteScore }));
             })
             .catch((message) => console.log(message));
     }
 
     render () {
-        const movieId = this.props.match.params.movieId;
-        const { backdrop, budget, credits, genres, homepage, images, title, tagline, videos, voteScore } = this.state;
+        const { budget, credits, genres, homepage, images, title, tagline, voteScore } = this.state;
         let poster = '';
-        let creditsAll = [];
+        // let creditsAll = [];
         let genresAll = [];
 
         if (images.posters) {
-            poster = images.posters[0].file_path;
-            creditsAll = credits.cast;
+            if (images.posters[1]) {
+                poster = images.posters[1].file_path;
+            } else {
+                poster = images.posters[0].file_path;
+            }
+            // creditsAll = credits.cast;
             genresAll = genres.map((genre) => genre.name);
         }
         console.log(typeof credits);
@@ -89,7 +92,6 @@ export default class MovieInfo extends Component {
                 <p>Homepage: <a href = { homepage }>{homepage}</a></p>
                 <p>User rating: { `${voteScore}` }</p>
                 <Link to = '/'>Back</Link>
-                
             </section>
         );
     }

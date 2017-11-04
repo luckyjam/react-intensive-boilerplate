@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { string } from 'prop-types';
 import Styles from './styles.scss';
 import moment from 'moment';
+import { getFullApiUrl } from '../../helpers';
 // import { Switch, Route } from 'react-router-dom';
 
 
@@ -65,9 +66,9 @@ export default class List extends Component {
     }
 
     _getGenresNames () {
-        const apiGetGenresListUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=';
+        const apiGetGenresList = 'https://api.themoviedb.org/3/genre/movie/list?';
         const { apiKey } = this.context;
-        const fullApiUrl = apiGetGenresListUrl + apiKey;
+        const fullApiUrl = getFullApiUrl(apiGetGenresList, apiKey);
 
         fetch(fullApiUrl, { method: 'GET' })
             .then((result) => {
@@ -159,9 +160,10 @@ export default class List extends Component {
 
     _getMovies (filter, nextPage) {
 
-        const filterUrlProperty = `&sort_by=${filter}`;
-        const pageNum = `&page=${nextPage}`;
-        const fullApiUrl = this.context.apiUrl + filterUrlProperty + pageNum;
+        const filterAndPage = `&sort_by=${filter}&page=${nextPage}`;
+        const apiUrl = this.context.apiUrl;
+        const key = this.context.apiKey;
+        const fullApiUrl = getFullApiUrl(apiUrl, key, filterAndPage);
 
         fetch(fullApiUrl, {
             method: 'GET'
@@ -225,7 +227,7 @@ export default class List extends Component {
                 <div className = { Styles.list }>
                     { moviesList }
                 </div>
-                <span>
+                <div>
                     <button
                         hidden = { !(this.state.currentPage > 1) }
                         onClick = { this.handleClickPreviousPage }>
@@ -234,8 +236,10 @@ export default class List extends Component {
                     <button onClick = { this.handleClickNextPage }>
                         NEXT PAGE
                     </button>
-                </span>
-                <div>
+                </div>
+                <h3>Favorite movies</h3>
+                <div className = { Styles.favoritesList }>
+                    
                     <Favorites
                         deleteFromFavorites = { this.deleteFromFavorites }
                         favoriteMovies = { favorites }

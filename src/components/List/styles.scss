@@ -6,6 +6,12 @@
     grid-auto-columns: 50%;
     grid-template-columns: 1fr 1fr;
     background-color: $paletteColor3;
-   
+    margin-top: 1vh;
   
+}
+
+.favoritesList {
+    display: grid;
+    grid-template-rows: 1;
+    background-color: $paletteColor3;
 }

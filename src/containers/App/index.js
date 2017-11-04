@@ -13,7 +13,7 @@ import MovieInfo from '../../components/MovieInfo';
 const apiKey = 'f95b4780d100c9d941e03e79486e1503';
 
 export const options = {
-    apiUrl: `https://api.themoviedb.org/3/discover/movie?certification_country=US&api_key=${apiKey}`,
+    apiUrl: `https://api.themoviedb.org/3/discover/movie?certification_country=US&`,
     apiKey
 };
 export default class App extends Component {

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-// import Styles from './styles.scss';
+import Styles from './styles.scss';
 import { func } from 'prop-types';
 
 export default class Nav extends Component {
@@ -42,8 +42,8 @@ export default class Nav extends Component {
     render () {
 
         return (
-            <div>
-                <button onClick = { this.handleClickFilterPopular } >Popular Movies</button>
+            <div className = { Styles.nav }>
+                <button onClick = { this.handleClickFilterPopular }>Popular Movies</button>
                 <button onClick = { this.handleClickFilterNew }>New Movies</button>
                 <button onClick = { this.handleClickFilterTop }>Top Movies</button>
             </div>

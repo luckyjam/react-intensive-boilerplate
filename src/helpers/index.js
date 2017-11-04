@@ -1,4 +1,8 @@
 export const getUniqueID = (length) => {
+
+    if (typeof length !== 'number') {
+        throw new Error('Length should be a number');
+    }
     let text = '';
     const possible =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,4 +23,12 @@ export const getRandomColor = () => {
     }
 
     return color;
+};
+
+export const getFullApiUrl = (api, key, addQuery='') => {
+    if (typeof api !== 'string' || typeof key !== 'string' || typeof addQuery !== 'string') {
+        throw new Error('api, key and addQuery should be a string');
+    }
+
+    return `${api}api_key=${key}${addQuery}`;
 };
