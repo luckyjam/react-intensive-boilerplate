@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-import Styles from './styles.scss';
+// import Styles from './styles.scss';
 import { string } from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import MovieInfo from '../../components/MovieInfo';
 const apiKey = 'f95b4780d100c9d941e03e79486e1503';
 
 export const options = {
-    apiUrl: `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`,
+    apiUrl: `https://api.themoviedb.org/3/discover/movie?certification_country=US&api_key=${apiKey}`,
     apiKey
 };
 export default class App extends Component {
@@ -31,10 +31,10 @@ export default class App extends Component {
     render () {
         return (
             <BrowserRouter>
-                <section>
+                <Switch>
                     <Route exact component = { List } path = '/' />
                     <Route component = { MovieInfo } path = '/:movieId' />
-                </section>
+                </Switch>
             </BrowserRouter>
         );
     }
