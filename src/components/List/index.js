@@ -239,7 +239,6 @@ export default class List extends Component {
                 </div>
                 <h3>Favorite movies</h3>
                 <div className = { Styles.favoritesList }>
-                    
                     <Favorites
                         deleteFromFavorites = { this.deleteFromFavorites }
                         favoriteMovies = { favorites }

@@ -34,10 +34,9 @@ export default class FavoriteMovie extends Component {
             <div className = { Styles.favorite } key = { movieId }>
                 <div>
                     <img alt = { title } src = { poster } />
-                    <p>{ title.substring(0,10) }</p>
+                    <p>{ title.substring(0, 10) }</p>
                 </div>
                 <div className = { Styles.favoriteCont }>
-                    
                     <p><Link to = { `/${movieId}` }>info</Link></p>
                     <button onClick = { this.deleteFromFavorites }>Delete</button>
                 </div>
