@@ -1,26 +1,55 @@
+@import '../../theme/palette';
+
 .nav {
-    display: flex;
-    flex-direction: row;
-    
-    button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
+    margin: 20px;
+
+    ul {
+        display: flex;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        .favoritesButton {
+            background-color: $buttonPink;
+            &:hover {
+                background-color: $buttonPinkLight;
+            }
+            &:active {
+                background-color: $buttonGreen;
+            }
+        }
+    }
+
+    li {
+        flex: 1 1 100%;
+        margin: 5px;
+        padding: 10px;
+        overflow: hidden;
+        border-width: 0;
+        border-radius: 2px;
+        outline: none;
+        background-color: $buttonGreen;
+        box-shadow: 0 1px 4px rgba($paletteColor1, .6);
+        color: $paletteColor2;
         text-align: center;
         text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin:5px 5px;
         cursor: pointer;
 
         &:hover {
-            background-color: #4bb83f;
+            background-color: $buttonGreenLight;
         }
 
         &:active {
-            background-color: #dd14d3
+            background-color: $buttonPink;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+        &:first-child {
+            margin-left: 0;
         }
 
+        
     }
 }

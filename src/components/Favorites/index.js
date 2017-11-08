@@ -32,14 +32,16 @@ export default class Favorites extends Component {
 
     render () {
         const { favoriteMovies } = this.props;
-        const favoriteMoviesList = favoriteMovies.map(({ movieId, title, poster }) => (
+        const favoriteMoviesList = favoriteMovies.map(({ movieId, title, poster, voteAverage, releaseDate }) => (
 
             <FavoriteMovie
                 deleteFromFavorites = { this.deleteFromFavorites }
                 key = { movieId }
                 movieId = { movieId }
                 poster = { poster }
+                releaseDate = { releaseDate }
                 title = { title }
+                voteAverage = { voteAverage }
             />
 
         ));

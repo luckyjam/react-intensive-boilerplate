@@ -2,16 +2,16 @@
 
 .list {
     display: grid;
+    background-color: $paletteColor2;
     grid-gap: 20px;
-    grid-auto-columns: 50%;
-    grid-template-columns: 1fr 1fr;
-    background-color: $paletteColor3;
-    margin-top: 1vh;
-  
+    grid-auto-rows: minmax(125px, auto);
+    margin: 20px;
 }
 
-.favoritesList {
-    display: grid;
-    grid-template-rows: 1;
-    background-color: $paletteColor3;
+@media screen and (min-width: 65em) {
+    .list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
 }
+

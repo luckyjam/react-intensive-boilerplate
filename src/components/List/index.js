@@ -6,14 +6,13 @@ import { string } from 'prop-types';
 import Styles from './styles.scss';
 import moment from 'moment';
 import { getFullApiUrl } from '../../helpers';
-// import { Switch, Route } from 'react-router-dom';
-
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
 
 // Components
 import Movie from '../Movie';
 import Favorites from '../Favorites';
 import Nav from '../Nav';
-// import MovieInfo from '../MovieInfo';
 
 export default class List extends Component {
 
@@ -27,14 +26,16 @@ export default class List extends Component {
         this.getMovies = ::this._getMovies;
         this.handleClickFilterNew = ::this._handleClickFilterNew;
         this.handleClickFilterPopular = ::this._handleClickFilterPopular;
+        this.handleClickFilterTop = ::this._handleClickFilterTop;
         this.addToFavorites = ::this._addToFavorites;
+        this.handleClickFavoritesList = ::this._handleClickFavoritesList;
         this.handleClickNextPage = ::this._handleClickNextPage;
         this.handleClickPreviousPage = ::this._handleClickPreviousPage;
-        this.handleClickFilterTop = ::this._handleClickFilterTop;
         this.getGenresNames = ::this._getGenresNames;
         this.genresIdsToNames = ::this._genresIdsToNames;
         this.deleteFromFavorites = ::this._deleteFromFavorites;
         this.isInFavorites = ::this._isInFavorites;
+        this.handleMovieAppear = ::this._handleMovieAppear;
 
     }
 
@@ -42,7 +43,7 @@ export default class List extends Component {
         movies:        [],
         favorites:     [],
         currentPage:   1,
-        currentFilter: 'popularity.desc',
+        currentFilter: '',
         genres:        []
     };
 
@@ -84,6 +85,10 @@ export default class List extends Component {
             .catch(({ message }) => console.log(message));
     }
 
+    _handleMovieAppear (movie) {
+        fromTo(movie, 1, { opacity: 0 }, { opacity: 1 });
+    }
+
     _handleClickFilterNew () {
         const currentDate = moment().format('YYYY-MM-DD');
 
@@ -91,20 +96,18 @@ export default class List extends Component {
     }
 
     _handleClickFilterPopular () {
-
         this.getMovies('popularity.desc', 1);
-
     }
 
     _handleClickFilterTop () {
-
         this.getMovies('vote_average.desc', 1);
+    }
 
+    _handleClickFavoritesList () {
+        this.setState(() => ({ currentFilter: 'favorites' }));
     }
 
     _addToFavorites (favoriteMovie) {
-        //const favoritesList = {...this.state.favorites, movieId };
-
         this.setState(({ favorites }) => ({ favorites: [favoriteMovie, ...favorites]}));
     }
 
@@ -117,7 +120,6 @@ export default class List extends Component {
         const nextPage = currentPage + 1;
 
         this.getMovies(currentFilter, nextPage);
-        window.scrollTo(0, 0);
     }
 
     _handleClickPreviousPage () {
@@ -126,8 +128,6 @@ export default class List extends Component {
 
         // this.setState(() => ({ currentPage: previousPage }));
         this.getMovies(currentFilter, previousPage);
-        window.scrollTo(0, 0);
-
     }
 
     _genresIdsToNames (genresIds) {
@@ -185,8 +185,8 @@ export default class List extends Component {
     }
 
     render () {
-        const { movies, favorites } = this.state;
-        const posterUrl = 'https://image.tmdb.org/t/p/w150';
+        const { movies, favorites, currentFilter, currentPage } = this.state;
+        const posterUrl = 'https://image.tmdb.org/t/p/w300';
         const placeholderImg = 'http://via.placeholder.com/150x220';
 
         const moviesList = movies.map(({
@@ -198,51 +198,59 @@ export default class List extends Component {
             genre_ids: genreIds,
             vote_average: voteAverage
         }) => (
-
-            <Movie
-                addToFavorites = { this.addToFavorites }
-                genreNames = { this.genresIdsToNames(genreIds) }
-                isInFavorites = { this.isInFavorites }
-                isInFavoritesValue = { this.isInFavorites(id) }
-                key = { id }
-                movieId = { id }
-                overview = { overview }
-                poster = { posterPath ? posterUrl + posterPath : placeholderImg }
-                releaseDate = { releaseDate }
-                title = { title }
-                voteAverage = { voteAverage }
-            />
+            <Transition
+                appear
+                in
+                key = { id } 
+                timeout = { 1000 }
+                onEnter = { this.handleMovieAppear }>
+                <Movie
+                    addToFavorites = { this.addToFavorites }
+                    deleteFromFavorites = { this.deleteFromFavorites }
+                    genreNames = { this.genresIdsToNames(genreIds) }
+                    isInFavorites = { this.isInFavorites }
+                    isInFavoritesValue = { this.isInFavorites(id) }
+                    key = { id }
+                    movieId = { id }
+                    overview = { overview }
+                    poster = { posterPath ? posterUrl + posterPath : placeholderImg }
+                    releaseDate = { releaseDate }
+                    title = { title }
+                    voteAverage = { voteAverage }
+                />
+            </Transition>
 
 
         ));
+
+        const favoritesOrMoviesRender = currentFilter === 'favorites'? (
+            <Favorites
+                deleteFromFavorites = { this.deleteFromFavorites }
+                favoriteMovies = { favorites }
+            />
+        ):(
+            <div className = { Styles.list }> { moviesList } </div>
+        );
 
         return (
 
             <section>
                 <Nav
+                    handleClickFavoritesList = { this.handleClickFavoritesList }
                     handleClickFilterNew = { this.handleClickFilterNew }
                     handleClickFilterPopular = { this.handleClickFilterPopular }
                     handleClickFilterTop = { this.handleClickFilterTop }
                 />
-                <div className = { Styles.list }>
-                    { moviesList }
-                </div>
+                { favoritesOrMoviesRender }
                 <div>
                     <button
-                        hidden = { !(this.state.currentPage > 1) }
+                        hidden = { !(currentPage > 1) || currentFilter === 'favorites' }
                         onClick = { this.handleClickPreviousPage }>
-                        PREVIOUS PAGE
+                        {'< '}PREVIOUS PAGE
                     </button>
-                    <button onClick = { this.handleClickNextPage }>
-                        NEXT PAGE
+                    <button hidden = { currentFilter === 'favorites' } onClick = { this.handleClickNextPage }>
+                        NEXT PAGE{' >'}
                     </button>
-                </div>
-                <h3>Favorite movies</h3>
-                <div className = { Styles.favoritesList }>
-                    <Favorites
-                        deleteFromFavorites = { this.deleteFromFavorites }
-                        favoriteMovies = { favorites }
-                    />
                 </div>
             </section>
         );

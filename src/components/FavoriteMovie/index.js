@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { string, number, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Styles from './styles.scss';
+import moment from 'moment';
 
 export default class FavoriteMovie extends Component {
 
@@ -28,17 +29,21 @@ export default class FavoriteMovie extends Component {
     }
 
     render () {
-        const { movieId, poster, title } = this.props;
+        const { movieId, poster, title, voteAverage, releaseDate } = this.props;
 
         return (
             <div className = { Styles.favorite } key = { movieId }>
                 <div>
-                    <img alt = { title } src = { poster } />
-                    <p>{ title.substring(0, 10) }</p>
+                    <Link to = { `/${movieId}` }>
+                        <img alt = { title } src = { poster } />
+                    </Link>
                 </div>
                 <div className = { Styles.favoriteCont }>
-                    <p><Link to = { `/${movieId}` }>info</Link></p>
-                    <button onClick = { this.deleteFromFavorites }>Delete</button>
+                    <p><Link to = { `/${movieId}` }>{ title }</Link></p>
+                    <p>{ moment(releaseDate).format('Y') }</p>
+                    <p><strong>Rating:</strong> { voteAverage !== 0 ? voteAverage : 'no rating' }</p>
+
+                    <span className = { Styles.deleteCross } onClick = { this.deleteFromFavorites } />
                 </div>
             </div>
         );

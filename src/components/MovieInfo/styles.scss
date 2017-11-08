@@ -1,0 +1,40 @@
+@import '../../theme/palette';
+
+.movieInfo {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    border-radius: 2px;
+    background-image: no-repeat;
+    background: rgba($paletteColor1, .2);
+    box-shadow: 0 10px 20px rgba($paletteColor1, .19), 0 6px 6px rgba($paletteColor1, .23);
+    margin: 5em;
+
+    .backgroundImg {
+        width: 100%;
+        height: 100%;
+        opacity: .2;
+    }
+    .content {
+        width: 70%;
+        margin-right: 2vw;
+        margin-left: 2vw;
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .poster {
+        width: 30%;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+.cast {
+    display: inline-grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(6, 1fr);
+}

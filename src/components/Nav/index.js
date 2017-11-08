@@ -18,6 +18,7 @@ export default class Nav extends Component {
         this.handleClickFilterNew = ::this._handleClickFilterNew;
         this.handleClickFilterPopular = ::this._handleClickFilterPopular;
         this.handleClickFilterTop = ::this._handleClickFilterTop;
+        this.handleClickFavoritesList = ::this._handleClickFavoritesList;
     }
 
     _handleClickFilterNew () {
@@ -38,15 +39,25 @@ export default class Nav extends Component {
         handleClickFilterTop();
     }
 
+    
+    _handleClickFavoritesList () {
+        const { handleClickFavoritesList } = this.props;
+
+        handleClickFavoritesList();
+    }
+
 
     render () {
 
         return (
-            <div className = { Styles.nav }>
-                <button onClick = { this.handleClickFilterPopular }>Popular Movies</button>
-                <button onClick = { this.handleClickFilterNew }>New Movies</button>
-                <button onClick = { this.handleClickFilterTop }>Top Movies</button>
-            </div>
+            <nav className = { Styles.nav }>
+                <ul>
+                    <li onClick = { this.handleClickFilterPopular }>Popular Movies</li>
+                    <li onClick = { this.handleClickFilterNew }>New Movies</li>
+                    <li onClick = { this.handleClickFilterTop }>Top Movies</li>
+                    <li className = { Styles.favoritesButton } onClick = { this.handleClickFavoritesList }>Favorites</li>
+                </ul>
+            </nav>
         );
     }
 }

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-// import Styles from './styles.scss';
+import Styles from './styles.scss';
 import { string } from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -31,10 +31,12 @@ export default class App extends Component {
     render () {
         return (
             <BrowserRouter>
-                <Switch>
-                    <Route exact component = { List } path = '/' />
-                    <Route component = { MovieInfo } path = '/:movieId' />
-                </Switch>
+                <section className = { Styles.app }>
+                    <Switch>
+                        <Route exact component = { List } path = '/' />
+                        <Route component = { MovieInfo } path = '/:movieId' />
+                    </Switch>
+                </section>
             </BrowserRouter>
         );
     }

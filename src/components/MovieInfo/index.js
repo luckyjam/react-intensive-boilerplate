@@ -4,9 +4,7 @@ import React, { Component } from 'react';
 // Instruments
 import { Link } from 'react-router-dom';
 import { string, object } from 'prop-types';
-
-// Components
-// import Cast from '../Cast';
+import Styles from './styles.scss';
 
 export default class MovieInfo extends Component {
 
@@ -15,9 +13,7 @@ export default class MovieInfo extends Component {
     }
 
     static propTypes = {
-        match:   object.isRequired,
-        movieId: string.isRequired,
-        params:  object.isRequired
+        match: object.isRequired
     }
 
     constructor () {
@@ -26,26 +22,15 @@ export default class MovieInfo extends Component {
     }
 
     state = {
-        backdrop:  '',
-        budget:    0,
-        credits:   {},
-        genres:    [],
-        homepage:  '',
-        images:    {},
-        title:     '',
-        tagline:   '',
-        videos:    {},
-        voteScore: {}
+        movieInfo: []
     };
 
     componentWillMount () {
-        if (this.props.match) {
-            this.getMovieInfo();
-        }
+        this.getMovieInfo();
     }
 
     _getMovieInfo () {
-        const movieId = this.props.match.params.movieId;
+        const { movieId } = this.props.match.params;
         const { apiKey } = this.context;
         const appendToRequest = '&append_to_response=videos,images,credits';
         const fullApiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}${appendToRequest}`;
@@ -59,40 +44,74 @@ export default class MovieInfo extends Component {
                 return response.json();
 
             })
-            .then(({ backdrop_path: backdrop, budget, credits, genres, homepage, images, title, tagline, videos, vote_average: voteScore }) => {
-                this.setState(() => ({ backdrop, budget, credits, genres, homepage, images, title, tagline, videos, voteScore }));
+            .then((result) => {
+                this.setState(() => ({ movieInfo: result }));
             })
             .catch((message) => console.log(message));
     }
 
     render () {
-        const { budget, credits, genres, homepage, images, title, tagline, voteScore } = this.state;
+        const { 
+            backdrop_path: backdrop, 
+            budget, 
+            credits, 
+            genres, 
+            homepage, 
+            images, 
+            title, 
+            overview,
+            tagline, 
+            videos, 
+            vote_average: voteScore 
+        } = this.state.movieInfo;
+        const placeholderPoster = 'http://via.placeholder.com/300x620';
+        const placeholderActorPhoto = 'http://via.placeholder.com/45x65';
         let poster = '';
-        // let creditsAll = [];
+        let creditsAll = '';
         let genresAll = [];
 
-        if (images.posters) {
+        if (title) {
             if (images.posters[1]) {
                 poster = images.posters[1].file_path;
-            } else {
+            } else if (images.posters[0]) {
                 poster = images.posters[0].file_path;
             }
-            // creditsAll = credits.cast;
+            creditsAll = credits.cast.map(({ name, character, profile_path: profilePath, cast_id: castId }, key) => (
+                <div key = { castId }>
+                    <h3>{name}</h3>
+                    <p>{character}</p>
+                    <img src = { profilePath ? `http://image.tmdb.org/t/p/w45${profilePath}` : placeholderActorPhoto } />
+                </div>
+            ));
             genresAll = genres.map((genre) => genre.name);
-        }
-        console.log(typeof credits);
 
-        return (
+        }
+
+        const result = title ? (
             <section>
-                <h1>{ title }</h1>
-                <img src = { `http://image.tmdb.org/t/p/w150${poster}` } />
-                <h3>{ tagline }</h3>
-                <p>Genres: {genresAll.join(', ')}</p>
-                <p>Budget: {budget.toLocaleString()}$</p>
-                <p>Homepage: <a href = { homepage }>{homepage}</a></p>
-                <p>User rating: { `${voteScore}` }</p>
-                <Link to = '/'>Back</Link>
+                <div className = { Styles.movieInfo }>
+                    <div className = { Styles.poster }>
+                        <img src = { poster ? `http://image.tmdb.org/t/p/w300${poster}` : placeholderPoster } />
+                    </div>
+                    <div className = { Styles.content }>
+                        <h1>{ title }</h1>
+                        <h3>{ tagline }</h3>
+                        <p><strong>Overview:</strong> { overview }</p>
+                        <p><strong>Genres:</strong> {genresAll.join(', ')}</p>
+                        <p><strong>Budget:</strong> {budget !== 0 ? `${budget.toLocaleString()}$` : 'unknown'}</p>
+                        <p><strong>Homepage:</strong> <a href = { homepage }>{homepage}</a></p>
+                        <p><strong>User rating:</strong> { `${voteScore}` }</p> 
+                        <Link to = '/'><button>Back</button></Link>
+                    </div>
+                </div>
+                <div className = { Styles.cast }>
+                    {creditsAll}
+                </div>
             </section>
+        ) : (
+            <h1>Loading...</h1>
         );
+
+        return result;
     }
 }
