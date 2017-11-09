@@ -8,6 +8,7 @@ import { func } from 'prop-types';
 export default class Nav extends Component {
 
     static propTypes = {
+        handleClickFavoritesList: func.isRequired,
         handleClickFilterNew:     func.isRequired,
         handleClickFilterPopular: func.isRequired,
         handleClickFilterTop:     func.isRequired
@@ -39,7 +40,6 @@ export default class Nav extends Component {
         handleClickFilterTop();
     }
 
-    
     _handleClickFavoritesList () {
         const { handleClickFavoritesList } = this.props;
 

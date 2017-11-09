@@ -15,6 +15,13 @@
         a {
             text-decoration: none;
         }
+
+        .star {
+            display: flex;
+            position: relative;
+            color: $buttonGreen;
+            font-size: 20px;
+        }
     }
 
     .poster {

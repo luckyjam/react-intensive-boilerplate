@@ -6,6 +6,8 @@ import { string, func, number, array, bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Styles from './styles.scss';
 import moment from 'moment';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
 
 export default class Movie extends Component {
 
@@ -26,6 +28,11 @@ export default class Movie extends Component {
         super();
         this.addToFavorites = ::this._addToFavorites;
         this.deleteFromFavorites = ::this._deleteFromFavorites;
+        this.handleMovieAppear = ::this._handleMovieAppear;
+    }
+
+    _handleMovieAppear (movie) {
+        fromTo(movie, 1, { opacity: 0 }, { opacity: 1 });
     }
 
     _addToFavorites () {
@@ -56,22 +63,28 @@ export default class Movie extends Component {
         }
 
         return (
-            <div className = { Styles.movie }>
-                <div className = { Styles.poster }>
-                    <img alt = 'movie poster' src = { poster } />
-                </div>
+            <Transition
+                appear
+                in
+                timeout = { 1000 }
+                onEnter = { this.handleMovieAppear }>
+                <div className = { Styles.movie }>
+                    <div className = { Styles.poster }>
+                        <img alt = 'movie poster' src = { poster } />
+                    </div>
 
-                <div className = { Styles.content } >
-                    <Link to = { `/${movieId}` }>
-                        <h3>{ title }</h3>
-                    </Link>
-                    <p>{ voteAverage !== 0? voteAverage : 'No rating'}</p>
-                    <p>{ moment(releaseDate).format('ll') }</p>
-                    <p>{ genreNames.join(' ') }</p>
-                    <p>{ overview }</p>
-                    { favoriteButton }
+                    <div className = { Styles.content } >
+                        <Link to = { `/${movieId}` }>
+                            <h3>{ title }</h3>
+                        </Link>
+                        <p className = { Styles.star }>{ voteAverage !== 0? voteAverage : 'No rating'} <i className = 'material-icons'>star</i></p>
+                        <p>{ moment(releaseDate).format('ll') }</p>
+                        <p>{ genreNames.join(', ') }</p>
+                        <p>{ overview }</p>
+                        { favoriteButton }
+                    </div>
                 </div>
-            </div>
+            </Transition>
         );
     }
 }

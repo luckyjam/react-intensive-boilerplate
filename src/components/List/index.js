@@ -6,8 +6,7 @@ import { string } from 'prop-types';
 import Styles from './styles.scss';
 import moment from 'moment';
 import { getFullApiUrl } from '../../helpers';
-import { Transition } from 'react-transition-group';
-import { fromTo } from 'gsap';
+
 
 // Components
 import Movie from '../Movie';
@@ -35,7 +34,6 @@ export default class List extends Component {
         this.genresIdsToNames = ::this._genresIdsToNames;
         this.deleteFromFavorites = ::this._deleteFromFavorites;
         this.isInFavorites = ::this._isInFavorites;
-        this.handleMovieAppear = ::this._handleMovieAppear;
 
     }
 
@@ -56,8 +54,6 @@ export default class List extends Component {
         if (favoritesLocalStorage) {
             this.setState(() => ({ favorites: favoritesLocalStorage }));
         }
-
-
     }
 
     componentWillUpdate (nextProps, nextState) {
@@ -83,10 +79,6 @@ export default class List extends Component {
                 this.setState(() => ({ genres }));
             })
             .catch(({ message }) => console.log(message));
-    }
-
-    _handleMovieAppear (movie) {
-        fromTo(movie, 1, { opacity: 0 }, { opacity: 1 });
     }
 
     _handleClickFilterNew () {
@@ -126,7 +118,6 @@ export default class List extends Component {
         const { currentPage, currentFilter } = this.state;
         const previousPage = currentPage - 1;
 
-        // this.setState(() => ({ currentPage: previousPage }));
         this.getMovies(currentFilter, previousPage);
     }
 
@@ -187,7 +178,7 @@ export default class List extends Component {
     render () {
         const { movies, favorites, currentFilter, currentPage } = this.state;
         const posterUrl = 'https://image.tmdb.org/t/p/w300';
-        const placeholderImg = 'http://via.placeholder.com/150x220';
+        const placeholderImg = 'http://via.placeholder.com/300x420';
 
         const moviesList = movies.map(({
             title,
@@ -198,29 +189,20 @@ export default class List extends Component {
             genre_ids: genreIds,
             vote_average: voteAverage
         }) => (
-            <Transition
-                appear
-                in
-                key = { id } 
-                timeout = { 1000 }
-                onEnter = { this.handleMovieAppear }>
-                <Movie
-                    addToFavorites = { this.addToFavorites }
-                    deleteFromFavorites = { this.deleteFromFavorites }
-                    genreNames = { this.genresIdsToNames(genreIds) }
-                    isInFavorites = { this.isInFavorites }
-                    isInFavoritesValue = { this.isInFavorites(id) }
-                    key = { id }
-                    movieId = { id }
-                    overview = { overview }
-                    poster = { posterPath ? posterUrl + posterPath : placeholderImg }
-                    releaseDate = { releaseDate }
-                    title = { title }
-                    voteAverage = { voteAverage }
-                />
-            </Transition>
-
-
+            <Movie
+                addToFavorites = { this.addToFavorites }
+                deleteFromFavorites = { this.deleteFromFavorites }
+                genreNames = { this.genresIdsToNames(genreIds) }
+                isInFavorites = { this.isInFavorites }
+                isInFavoritesValue = { this.isInFavorites(id) }
+                key = { id }
+                movieId = { id }
+                overview = { overview }
+                poster = { posterPath ? posterUrl + posterPath : placeholderImg }
+                releaseDate = { releaseDate }
+                title = { title }
+                voteAverage = { voteAverage }
+            />
         ));
 
         const favoritesOrMoviesRender = currentFilter === 'favorites'? (
@@ -242,7 +224,7 @@ export default class List extends Component {
                     handleClickFilterTop = { this.handleClickFilterTop }
                 />
                 { favoritesOrMoviesRender }
-                <div>
+                <div className = { Styles.pagination } >
                     <button
                         hidden = { !(currentPage > 1) || currentFilter === 'favorites' }
                         onClick = { this.handleClickPreviousPage }>
