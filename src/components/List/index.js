@@ -11,7 +11,7 @@ import { getFullApiUrl } from '../../helpers';
 // Components
 import Movie from '../Movie';
 import Favorites from '../Favorites';
-import Nav from '../Nav';
+import Filters from '../Filters';
 
 export default class List extends Component {
 
@@ -217,7 +217,7 @@ export default class List extends Component {
         return (
 
             <section>
-                <Nav
+                <Filters
                     handleClickFavoritesList = { this.handleClickFavoritesList }
                     handleClickFilterNew = { this.handleClickFilterNew }
                     handleClickFilterPopular = { this.handleClickFilterPopular }

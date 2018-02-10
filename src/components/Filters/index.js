@@ -50,14 +50,14 @@ export default class Nav extends Component {
     render () {
 
         return (
-            <nav className = { Styles.nav }>
+            <section className = { Styles.filters }>
                 <ul>
                     <li onClick = { this.handleClickFilterPopular }>Popular Movies</li>
                     <li onClick = { this.handleClickFilterNew }>New Movies</li>
                     <li onClick = { this.handleClickFilterTop }>Top Movies</li>
                     <li className = { Styles.favoritesButton } onClick = { this.handleClickFavoritesList }>Favorites</li>
                 </ul>
-            </nav>
+            </section>
         );
     }
 }
