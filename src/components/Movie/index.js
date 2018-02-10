@@ -8,6 +8,7 @@ import Styles from './styles.scss';
 import moment from 'moment';
 import { Transition } from 'react-transition-group';
 import { fromTo } from 'gsap';
+import { trimOverview } from '../../helpers';
 
 export default class Movie extends Component {
 
@@ -55,6 +56,7 @@ export default class Movie extends Component {
     render () {
         const { title, poster, movieId, genreNames, isInFavoritesValue, voteAverage, overview, releaseDate } = this.props;
         let favoriteButton = null;
+        const formattedOverview = trimOverview(overview);
 
         if (!isInFavoritesValue) {
             favoriteButton = <span className = { Styles.favoriteAdd } onClick = { this.addToFavorites } />;
@@ -80,7 +82,7 @@ export default class Movie extends Component {
                         <p className = { Styles.star }>{ voteAverage !== 0? voteAverage : 'No rating'} <i className = 'material-icons'>star</i></p>
                         <p>{ moment(releaseDate).format('ll') }</p>
                         <p>{ genreNames.join(', ') }</p>
-                        <p>{ overview }</p>
+                        <p>{ formattedOverview }</p>
                         { favoriteButton }
                     </div>
                 </div>

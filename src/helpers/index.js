@@ -32,3 +32,21 @@ export const getFullApiUrl = (api, key, addQuery='') => {
 
     return `${api}api_key=${key}${addQuery}`;
 };
+
+export const trimOverview = (overview) => {
+
+    if (typeof overview !== 'string') {
+        throw new Error('overview should be a string');
+    }
+
+    const overviewLength = overview.length;
+
+    if (overviewLength > 250) {
+        const trimmedOverview = overview.substr(0, 247);
+
+        // removing last character if it is not a letter or a number
+        return `${trimmedOverview.replace(/[^\w\d]+$/, '')}...`;
+    }
+
+    return overview;
+};
