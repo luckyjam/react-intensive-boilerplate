@@ -29,7 +29,7 @@
         border-width: 0;
         border-radius: 2px;
         outline: none;
-        background-color: $buttonGreen;
+        background-color: $paletteColor5;
         box-shadow: 0 1px 4px rgba($paletteColor1, .6);
         color: $paletteColor2;
         text-decoration: none;
@@ -37,11 +37,11 @@
         cursor: pointer;
 
         &:hover {
-            background-color: $buttonGreenLight;
+            background-color: $paletteColor4;
         }
 
         &:active {
-            background-color: $buttonPink;
+            background-color: $paletteColor8;
         }
     }
 }
