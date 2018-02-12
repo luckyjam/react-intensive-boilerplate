@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Styles from './styles.scss';
 import { func } from 'prop-types';
 
-export default class Nav extends Component {
+export default class Filters extends Component {
 
     static propTypes = {
         handleClickFavoritesList: func.isRequired,
